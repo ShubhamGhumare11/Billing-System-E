@@ -14,8 +14,10 @@
     "@chakra-ui/react": "^2.4.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "axios": "^1.7.7",
     "billing": "file:",
     "framer-motion": "^6.4.0",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

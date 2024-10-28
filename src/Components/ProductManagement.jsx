@@ -323,6 +323,7 @@ const ProductManagement = () => {
   const [isProductListVisible, setIsProductListVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false); // New state to control form visibility
   const [editableProductID, setEditableProductID] = useState(null); // New state for editable product
+  const [searchdedProducts, setSearchedProducts] = useState([]); // New state for editable product
 
   const [newProduct, setNewProduct] = useState({
     productName: '',
@@ -365,12 +366,17 @@ setIsProductListVisible(false)
 
   };
 
+
+    
+
+
+
   return (
     <VStack spacing={4} mt={4}>
       <HStack spacing={4}>
         <Button colorScheme="teal" onClick={handleAddProduct}>Add Product</Button>
         <Button colorScheme="blue" onClick={handleGetAllProducts}>Get All Products</Button>
-       <SearchComponent/>
+        <SearchComponent  />
       </HStack>
 
       {/* Add Product Form */}

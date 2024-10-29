@@ -81,8 +81,8 @@ const SearchComponent = () => {
         setError(null);
 
         try {
-          const response = await axios.get(`/api/products/search`, {
-            params: { query: term },
+          const response = await axios.get(`http://localhost:8080/products/search`, {
+            params: { searchCharacter: term },
           });
           setFilteredProducts(response.data); // Assumes the API returns an array of products
         } catch (err) {
@@ -124,7 +124,9 @@ const SearchComponent = () => {
               <Th>Product Name</Th>
               <Th>Product Type</Th>
               <Th>Description</Th>
+              <Th>Actual Price</Th>
               <Th>Selling Price</Th>
+              <Th>Discount</Th> 
               <Th>Stock Quantity</Th>
             </Tr>
           </Thead>
@@ -135,8 +137,11 @@ const SearchComponent = () => {
                 <Td>{product.productName}</Td>
                 <Td>{product.productType}</Td>
                 <Td>{product.description}</Td>
+                <Td>{product.actualPrice}</Td>
                 <Td>{product.sellingPrice}</Td>
-                <Td>{product.stockQuantity}</Td>
+
+                <Td>{product.discount}</Td>
+                <Td>{product.stockQuantities}</Td>
               </Tr>
             ))}
           </Tbody>

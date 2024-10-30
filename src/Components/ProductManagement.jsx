@@ -44,7 +44,7 @@
 //     sellingPrice: "",
 //     discount: "",
 //     stockQuantities: [0],
-//     productType: "",
+//     clothingType: "",
 //   });
 
 //   // Fetch all products from API
@@ -147,7 +147,7 @@
 //         sellingPrice: "",
 //         discount: "",
 //         stockQuantities: [0],
-//         productType: "",
+//         clothingType: "",
 //       });
 //       // setIsProductListVisible(true);
 
@@ -213,11 +213,11 @@
 //               <HStack spacing={4}>
 //                 <FormControl>
 //                   <Checkbox
-//                     isChecked={newProduct.productType === "READYMADE"}
+//                     isChecked={newProduct.clothingType === "READYMADE"}
 //                     onChange={(e) =>
 //                       setNewProduct({
 //                         ...newProduct,
-//                         productType: e.target.checked ? "READYMADE" : "",
+//                         clothingType: e.target.checked ? "READYMADE" : "",
 //                       })
 //                     }
 //                   >
@@ -226,11 +226,11 @@
 //                 </FormControl>
 //                 <FormControl>
 //                   <Checkbox
-//                     isChecked={newProduct.productType === "UNSTITCHED"}
+//                     isChecked={newProduct.clothingType === "UNSTITCHED"}
 //                     onChange={(e) =>
 //                       setNewProduct({
 //                         ...newProduct,
-//                         productType: e.target.checked ? "UNSTITCHED" : "",
+//                         clothingType: e.target.checked ? "UNSTITCHED" : "",
 //                       })
 //                     }
 //                   >
@@ -362,13 +362,13 @@
 //                 {/* <Td>
 //                 {editableProductID === product.productID ? (
 //                   <Checkbox
-//                     isChecked={product.productType === 'READYMADE'}
-//                     onChange={(e) => handleProductChange(product.productID, 'productType', e.target.checked ? 'READYMADE' : 'UNSTITCHED')}
+//                     isChecked={product.clothingType === 'READYMADE'}
+//                     onChange={(e) => handleProductChange(product.productID, 'clothingType', e.target.checked ? 'READYMADE' : 'UNSTITCHED')}
 //                   >
 //                     Readymade
 //                   </Checkbox>
 //                 ) : (
-//                   product.productType
+//                   product.clothingType
 //                 )}
 //               </Td> */}
 
@@ -376,16 +376,16 @@
 //                   {editableProductID === product.productID ? (
 //                     <VStack spacing={4}>
 //                       <Checkbox
-//                         isChecked={product.productType === "READYMADE"}
+//                         isChecked={product.clothingType === "READYMADE"}
 //                         onChange={(e) =>
 //                           handleProductChange(
 //                             product.productID,
-//                             "productType",
+//                             "clothingType",
 //                             e.target.checked
 //                               ? "READYMADE"
-//                               : product.productType === "UNSTITCHED"
+//                               : product.clothingType === "UNSTITCHED"
 //                               ? ""
-//                               : product.productType
+//                               : product.clothingType
 //                           )
 //                         }
 //                       >
@@ -393,16 +393,16 @@
 //                       </Checkbox>
 
 //                       <Checkbox
-//                         isChecked={product.productType === "UNSTITCHED"}
+//                         isChecked={product.clothingType === "UNSTITCHED"}
 //                         onChange={(e) =>
 //                           handleProductChange(
 //                             product.productID,
-//                             "productType",
+//                             "clothingType",
 //                             e.target.checked
 //                               ? "UNSTITCHED"
-//                               : product.productType === "READYMADE"
+//                               : product.clothingType === "READYMADE"
 //                               ? ""
-//                               : product.productType
+//                               : product.clothingType
 //                           )
 //                         }
 //                       >
@@ -410,7 +410,7 @@
 //                       </Checkbox>
 //                     </VStack>
 //                   ) : (
-//                     product.productType
+//                     product.clothingType
 //                   )}
 //                 </Td>
 
@@ -551,7 +551,7 @@ const ProductManagement = () => {
     sellingPrice: "",
     discount: "",
     stockQuantities: [0],
-    productType: "",
+    clothingType: "",
   });
 
   // Fetch all products from API
@@ -654,7 +654,7 @@ const ProductManagement = () => {
         sellingPrice: "",
         discount: "",
         stockQuantities: [0],
-        productType: "",
+        clothingType: "",
       });
       // setIsProductListVisible(true);
 
@@ -701,11 +701,11 @@ const ProductManagement = () => {
               <HStack spacing={4}>
                 <FormControl>
                   <Checkbox
-                    isChecked={newProduct.productType === 'READYMADE'}
+                    isChecked={newProduct.clothingType === 'READYMADE'}
                     onChange={(e) =>
                       setNewProduct({
                         ...newProduct,
-                        productType: e.target.checked ? 'READYMADE' : '',
+                        clothingType: e.target.checked ? 'READYMADE' : '',
                       })
                     }
                   >
@@ -714,11 +714,11 @@ const ProductManagement = () => {
                 </FormControl>
                 <FormControl>
                   <Checkbox
-                    isChecked={newProduct.productType === 'UNSTITCHED'}
+                    isChecked={newProduct.clothingType === 'UNSTITCHED'}
                     onChange={(e) =>
                       setNewProduct({
                         ...newProduct,
-                        productType: e.target.checked ? 'UNSTITCHED' : '',
+                        clothingType: e.target.checked ? 'UNSTITCHED' : '',
                       })
                     }
                   >
@@ -843,7 +843,7 @@ const ProductManagement = () => {
                       product.productName
                     )}
                   </Td>
-                  <Td>{product.productType}</Td>
+                  <Td>{product.clothingType}</Td>
                   <Td>{product.description}</Td>
                   <Td>{product.sellingPrice}</Td>
                   <Td>{product.stockQuantities}</Td>

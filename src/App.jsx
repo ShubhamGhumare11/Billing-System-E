@@ -1,19 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Box, Button, Text } from '@chakra-ui/react'; // Chakra UI components import karein
-import HomePage from './Components/Homepage';
+// App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidebar from './Components/Sidebar';
+import ProductManagement from './Components/ProductManagement';
+import InvoiceManagementPage from './Components/Invoice/InvoiceManagementPage';
+
+import { Box } from '@chakra-ui/react';
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    <HomePage/>
-
-    </>
-  )
+    <Router>
+    <Box display="flex" height="100vh">
+      <Sidebar /> {/* This renders the sidebar */}
+      <Box flex="1" p={4}   ml={{ base: '0', md: '0' }}  >
+        <Routes>
+          <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Home route */}
+          <Route path="/invoicemanagement" element={<InvoiceManagementPage />} />
+        </Routes>
+      </Box>
+    </Box>
+  </Router>
+  );
 }
 
-export default App
+export default App;

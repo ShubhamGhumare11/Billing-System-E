@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './Components/Sidebar';
 import ProductManagement from './Components/ProductManagement';
 import InvoiceManagementPage from './Components/Invoice/InvoiceManagementPage';
+import InvoiceManager from './Components/Invoicenew/InvoiceManager';
 
 import { Box } from '@chakra-ui/react';
 
@@ -17,6 +18,8 @@ function App() {
         <Routes>
           <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Home route */}
           <Route path="/invoicemanagement" element={<InvoiceManagementPage />} />
+          <Route path="/invoicemanager" element={<InvoiceManager/>} />  
+           
         </Routes>
       </Box>
     </Box>

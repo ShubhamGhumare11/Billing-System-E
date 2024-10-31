@@ -93,11 +93,16 @@ const InvoiceManager = () => {
 
     const handleGenerateInvoice = async () => {
         const invoiceData = {
+
+            
+
             total: totalAmount,
             invoicesDetails: selectedProducts.map((p) => ({
                 productID: p.productID,
                 productName: p.productName,
                 price: p.price,
+                description:p.description,
+
                 // Add any other product fields required in invoice details
             })),
             customers: {
@@ -105,6 +110,7 @@ const InvoiceManager = () => {
                 email: customerDetails.email,
                 phone: customerDetails.phone,
             },
+
             // Optionally add shipping details if required
             // shippingDetails: [{ /* shipping info */ }]
         };
@@ -128,7 +134,7 @@ const InvoiceManager = () => {
             <Text fontWeight="bold" mt={4}>Selected Products:</Text>
             {selectedProducts.map((product) => (
                 <Text key={product.productID}>
-                    {product.productName} - ${product.price}
+                    {product.productName} - ${product.price}-{product.description}
                 </Text>
             ))}
             <Text fontWeight="bold" mt={4}>Total Amount: ${totalAmount}</Text>
@@ -158,8 +164,12 @@ const InvoiceManager = () => {
                 />
             </FormControl>
 
-            <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal">
+            <Button onClick={handleGenerateInvoice} mt={4} mx={5} colorScheme="teal">
                 Generate Invoice
+            </Button>
+
+            <Button  mt={4} colorScheme="green">
+               SUBMIT
             </Button>
         </Box>
     );

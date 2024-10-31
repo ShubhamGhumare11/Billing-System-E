@@ -51,7 +51,7 @@ const Sidebar = () => {
           <VStack align="start" spacing={4}>
             <Link to="/ProductManagement" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiHome />} w="full">
-                Product
+                Product Management
               </Button>
             </Link>
             <Link to="/invoicemanagement" onClick={onClose}>
@@ -59,7 +59,7 @@ const Sidebar = () => {
                 Invoice Management
               </Button>
             </Link>
-            <Link to="/contact" onClick={onClose}>
+            <Link to="/invoicemanager" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPhone />} w="full">
                 Contact
               </Button>

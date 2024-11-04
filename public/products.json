@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "category": "Shirts",
+    "name": "Casual Shirt",
+    "description": "Comfortable cotton casual shirt",
+    "price": 25,
+    "quantity": 30
+  },
+  {
+    "id": 2,
+    "category": "Shirts",
+    "name": "Formal Shirt",
+    "description": "Elegant formal shirt for office wear",
+    "price": 40,
+    "quantity": 10
+  },
+  {
+    "id": 3,
+    "category": "Pants",
+    "name": "Jeans",
+    "description": "Stylish blue jeans",
+    "price": 50,
+    "quantity": 10
+  },
+  {
+    "id": 4,
+    "category": "Accessories",
+    "name": "Belt",
+    "description": "Leather belt for formal wear",
+    "price": 15,
+    "quantity": 100
+  }
+]

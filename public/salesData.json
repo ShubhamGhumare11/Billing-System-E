@@ -1,0 +1,14 @@
+[
+  { "date": "2023-01-01", "sales": 5000, "profit": 1500, "loss": 300, "allTime": 8000 },
+  { "date": "2023-02-01", "sales": 7000, "profit": 2000, "loss": 250, "allTime": 10000 },
+  { "date": "2023-03-01", "sales": 6500, "profit": 1800, "loss": 400, "allTime": 9500 },
+  { "date": "2023-04-01", "sales": 8000, "profit": 2500, "loss": 200, "allTime": 12000 },
+  { "date": "2023-05-01", "sales": 7500, "profit": 2200, "loss": 350, "allTime": 11000 },
+  { "date": "2023-06-01", "sales": 9000, "profit": 2700, "loss": 150, "allTime": 13000 },
+  { "date": "2023-07-01", "sales": 8500, "profit": 2400, "loss": 300, "allTime": 12500 },
+  { "date": "2023-08-01", "sales": 9200, "profit": 2800, "loss": 100, "allTime": 13500 },
+  { "date": "2023-09-01", "sales": 8800, "profit": 2600, "loss": 200, "allTime": 13200 },
+  { "date": "2023-10-01", "sales": 9500, "profit": 2900, "loss": 150, "allTime": 14000 },
+  { "date": "2023-11-01", "sales": 9700, "profit": 3000, "loss": 100, "allTime": 14200 },
+  { "date": "2023-12-01", "sales": 10000, "profit": 3200, "loss": 50, "allTime": 15000 }
+]

@@ -2,6 +2,7 @@
 
 // Sales metrics for summary
 const salesSummary = {
+    totalSales:1000000,
     dailySales: 12000,
     monthlySales: 50000,
     totalTransactions: 500,

@@ -128,7 +128,7 @@ const InvoiceManager = () => {
     const handleGenerateInvoice = async () => {
          // Constructing the CustomersDTO
          const customersDTO = {
-            customerID: customerData?.customerID || null, // Handle optional customerID
+            customerID: customerData?.customerID || '', // Handle optional customerID
             firstName: customerData?.firstName || '', // Default to empty string if not provided
             lastName: customerData?.lastName || '', // Default to empty string if not provided
             email: customerData?.email || '', // Default to empty string if not provided
@@ -138,7 +138,9 @@ const InvoiceManager = () => {
             paymentDTO: customerData?.paymentDTO || null // Set to null if not provided
         };
         const invoiceData = {
-            // invoiceId: invoiceId,
+            // invoiceId: crypto.randomUUID(),
+                        // invoiceId: null,
+
             invoiceDate: new Date().toISOString().split('T')[0], // Current date in 'YYYY-MM-DD'
             dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Due date set to 30 days later
             total: totalAmount,
@@ -162,11 +164,29 @@ const InvoiceManager = () => {
             // })),
 
             invoicesDetails: selectedProducts.map(product => ({
-                Quantity: product.quantity, // Use the expected casing for Quantity
+                // invoiceDetailID: crypto.randomUUID(),
+                // invoiceDetailID:null,
+                Quantity: product.quantity || 1, // Use the expected casing for Quantity
+                // invoice:invoiceId,
                 product: {
                     productID: product.productID, // Assuming this is the ID of the product
-                    // productName: product.productName // Include if you need to show name as well
-                }
+                    productName: product.productName ,// Include if you need to show name as well
+                    description:product.description ,
+                    price: product.price ,
+                    actualPrice: product.actualPrice ,
+                    sellingPrice: product.sellingPrice ,
+                    discount: product.discount ,
+
+                    // clothingType: product.clothingType ,
+                    clothingType: "READYMADE" ,
+
+
+                    stockQuantities: product.stockQuantities ,
+
+                   
+
+                }, 
+                 invoice: { invoiceId: null } 
             })),
 
 
@@ -179,9 +199,9 @@ const InvoiceManager = () => {
 
 
 
-        console.log(invoiceData)
+        console.log("Invoice data is post to backend api..."+JSON.stringify(invoiceData))
         try {
-            const response = await axios.post('http://localhost:8080/invoice/saveInformation', invoiceData);
+            const response = await axios.post(  `http://localhost:8080/invoice/saveInformation?id=${customerData.customerID}`, invoiceData);
             alert("Invoice generated successfully!");
             resetInvoice();
         } catch (error) {
@@ -217,3 +237,15 @@ const InvoiceManager = () => {
 };
 
 export default InvoiceManager;
+
+
+
+
+
+
+
+
+
+
+
+

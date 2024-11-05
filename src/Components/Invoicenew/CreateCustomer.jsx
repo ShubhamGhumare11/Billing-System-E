@@ -188,12 +188,24 @@ const CreateCustomer = ({ isOpen, onClose,onCustomerData  }) => {
       invoiceDTOS: null, // Set to null as per your requirement
       paymentDTO: null, // Set to null as per your requirement
     };
-    onCustomerData(customerData); 
+   
     try {
 
       console.log("Payload being sent to backend:", payload);
-      await axios.post("http://localhost:8080/customers/saveInformation", payload); // Adjust the endpoint as needed
-      toast({
+     const response= await axios.post("http://localhost:8080/customers/saveInformation", payload); // Adjust the endpoint as needed
+    
+     const customerData = response.data.object;
+     console.log("Customer ID (stringified):", JSON.stringify(customerData.customerID));
+     const customerid = JSON.stringify(customerData.customerID)
+
+
+
+
+
+     // Pass customer data including customerID to parent component
+     onCustomerData({ ...customerData, customerid });
+   
+     toast({
         title: "Customer created.",
         description: "The customer has been successfully created.",
         status: "success",

@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "customer": "John Doe",
+      "date": "2024-11-01",
+      "amount": 150.0
+    },
+    {
+      "id": 2,
+      "customer": "Jane Smith",
+      "date": "2024-11-02",
+      "amount": -75.5
+    },
+    {
+      "id": 3,
+      "customer": "Sam Wilson",
+      "date": "2024-11-03",
+      "amount": 200.0
+    },
+    {
+        "id": 4,
+        "customer": "John Doe",
+        "date": "2024-11-01",
+        "amount": 150.0
+      },
+      {
+        "id": 5,
+        "customer": "Jane Smith",
+        "date": "2024-11-02",
+        "amount": -75.5
+      },
+      {
+        "id": 6,
+        "customer": "Sam Wilson",
+        "date": "2024-11-03",
+        "amount": 200.0
+      }
+  ]
+  

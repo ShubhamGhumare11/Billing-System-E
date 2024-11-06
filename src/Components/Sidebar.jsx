@@ -9,8 +9,9 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { FiMenu, FiX, FiHome, FiInfo, FiPhone } from 'react-icons/fi';
+import { FiMenu, FiX, FiHome, FiInfo, FiPhone, FiPackage } from 'react-icons/fi'; // FiPackage for Inventory icon
 import { Link } from 'react-router-dom';
+import { TbFileReport } from 'react-icons/tb';
 
 const Sidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,7 +29,6 @@ const Sidebar = () => {
         ml={{ base: '0', md: '0' }} 
         position={{ base: 'fixed', md: 'relative' }} // Fixed for mobile, relative for desktop
         zIndex={2}
-        
       >
         {/* Close button for mobile view */}
         <IconButton
@@ -62,6 +62,16 @@ const Sidebar = () => {
             <Link to="/invoicemanager" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPhone />} w="full">
                 Contact
+              </Button>
+            </Link>
+            <Link to="/SalesDashboard" onClick={onClose}>
+              <Button variant="link" colorScheme="whiteAlpha" leftIcon={<TbFileReport />} w="full">
+                Sales Reports
+              </Button>
+            </Link>
+            <Link to="/Inventory" onClick={onClose}>
+              <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPackage />} w="full">
+                Inventory
               </Button>
             </Link>
           </VStack>

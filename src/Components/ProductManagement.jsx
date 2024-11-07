@@ -563,7 +563,7 @@ const ProductManagement = () => {
 
 // pagination Logic
 const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // Adjust this value to set items per page
+  const itemsPerPage = 20; // Adjust this value to set items per page
 
   // Calculate slice for current page
   const indexOfLastProduct = currentPage * itemsPerPage;
@@ -915,7 +915,7 @@ const [currentPage, setCurrentPage] = useState(1);
          <Table variant="simple" mt={4}>
            <Thead>
              <Tr>
-               <Th>Product ID</Th>
+               {/* <Th>Product ID</Th> */}
                <Th>Product Name</Th>
                <Th>Product Type</Th>
                <Th>Description</Th>
@@ -931,7 +931,7 @@ const [currentPage, setCurrentPage] = useState(1);
                 onClick={() => handleEditProduct(product.productID)}
                 _hover={{ backgroundColor: "gray.100" }}
                >
-                 <Td>{product.productID}</Td>
+                 {/* <Td>{product.productID}</Td> */}
 
                  <Td>
                    {editableProductID === product.productID ? (

@@ -123,7 +123,15 @@ const InvoiceManager = () => {
         setSelectedProducts(products);
     };
 
-    const totalAmount = selectedProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    // const totalAmount = selectedProducts.reduce((acc, product) => acc + product.sellingPrice * product.quantity, 0);
+    const calculateTotalAmount = () => {
+        return selectedProducts.reduce((acc, product) => {
+            const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
+            return acc + finalPrice * product.quantity;
+        }, 0);
+    };
+    const totalAmount = calculateTotalAmount();
+
 
     const handleGenerateInvoice = async () => {
          // Constructing the CustomersDTO
@@ -216,7 +224,9 @@ const InvoiceManager = () => {
         const invoiceData = {
             invoice1Date: new Date().toISOString().split('T')[0], // Current date in 'YYYY-MM-DD'
             invoice1DueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Due date set to 30 days later
-            submit: true, // Set to true as per your example
+            // grandTotal:selectedProducts.
+            
+            // submit: true, // Set to true as per your example
             
             // Constructing the customer object to match backend format
             customer: {

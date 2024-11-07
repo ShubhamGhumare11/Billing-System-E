@@ -14,6 +14,7 @@ function App() {
       <Box display="flex" height="100vh">
         <Sidebar /> {/* This renders the sidebar */}
         <Box flex="1" p={4} ml={{ base: '0', md: '0' }}>
+        
           <Routes>
             <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Product Management route */}
             <Route path="/invoicemanagement" element={<InvoiceManagementPage />} /> {/* Invoice Management route */}

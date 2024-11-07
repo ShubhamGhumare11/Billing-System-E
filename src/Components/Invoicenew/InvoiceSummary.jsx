@@ -59,11 +59,21 @@ const InvoiceSummary = ({ customer, products, total }) => {
 
             <VStack mt={4} spacing={2} align="start">
                 <Text fontWeight="bold">Selected Products:</Text>
-                {products.map((product, index) => (
+                {/* {products.map((product, index) => (
                     <Text key={index}>
-                        {product.productName} - ${product.price} x {product.quantity}
+                        {product.productName} - ${product.sellingPrice} x {product.quantity}
                     </Text>
-                ))}
+                ))} */}
+
+                {products.map((product, index) => {
+                const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
+                return (
+                    <Text key={index}>
+                        {product.productName} - ${finalPrice.toFixed(2)} x {product.quantity}
+                    </Text>
+                );
+            })}
+
             </VStack>
 
             <Text mt={4} fontWeight="bold">Total Amount: ${total}</Text>

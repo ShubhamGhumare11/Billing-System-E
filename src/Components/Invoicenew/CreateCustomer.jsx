@@ -384,7 +384,7 @@ const CreateCustomer = ({ onCustomerData }) => {
       <VStack spacing="1.5rem" align="stretch">
         <HStack spacing="1rem" wrap={{ base: 'wrap', md: 'nowrap' }}>
           <FormControl  flex="1" minWidth="12rem">
-            <FormLabel fontSize="1rem">First Name</FormLabel>
+            <FormLabel fontSize="1rem"> Name</FormLabel>
             <Input
               name="firstName"
               value={customerData.firstName}

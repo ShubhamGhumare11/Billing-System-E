@@ -109,7 +109,7 @@ const InvoiceManager = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Manage modal open/close state
 
     const handleCustomerData = (data) => {
-        console.log("Customer Data Received:", data); // Log to confirm the data
+        console.log("Customer Data Received in Invoice Manager:", data); // Log to confirm the data
         setCustomerData(data);
     };
 
@@ -247,6 +247,7 @@ const InvoiceManager = () => {
         }
     };
 
+    
     const resetInvoice = () => {
         setCustomerData(null);
         setSelectedProducts([]);
@@ -254,16 +255,18 @@ const InvoiceManager = () => {
 
     return (
         <Box>
-               <Button onClick={() => setIsModalOpen(true)} colorScheme="teal" mb={4}>
+               {/* <Button onClick={() => setIsModalOpen(true)} colorScheme="teal" mb={4}>
                 Create Customer
-            </Button>
-
+            </Button> */}
+{/* 
             <CreateCustomer 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
                 onCustomerData={handleCustomerData} 
-            />  
-            <CustomerList onSelect={handleCustomerSelect} />
+            />  */}
+                <CreateCustomer  onCustomerData={handleCustomerData} 
+            />   
+            {/* <CustomerList onSelect={handleCustomerSelect} /> */}
 
             <ProductSelection onProductSelect={handleProductSelect} />
             <InvoiceSummary customer={customerData} products={selectedProducts} total={totalAmount} />

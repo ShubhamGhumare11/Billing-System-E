@@ -61,7 +61,7 @@ const Sidebar = () => {
             </Link>
             <Link to="/invoicemanager" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPhone />} w="full">
-                Contact
+               Invoice
               </Button>
             </Link>
             <Link to="/SalesDashboard" onClick={onClose}>

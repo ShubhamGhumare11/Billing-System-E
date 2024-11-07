@@ -532,9 +532,15 @@ import {
   ModalBody,
   ModalFooter,
   Flex,
+  IconButton ,
+  Tooltip,
 } from "@chakra-ui/react";
 import axios from "axios";
 import SearchComponent from "./SearchComponent";
+import { FaPlus,FaList } from "react-icons/fa";
+import { HiSave, HiPencilAlt, HiTrash } from "react-icons/hi";
+
+
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
@@ -550,9 +556,27 @@ const ProductManagement = () => {
     actualPrice: "",
     sellingPrice: "",
     discount: "",
-    stockQuantities: [0],
+    stockQuantities: [],
     clothingType: "",
   });
+
+
+// pagination Logic
+const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3; // Adjust this value to set items per page
+
+  // Calculate slice for current page
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+
+
+
+
+
+
 
   // Fetch all products from API
   const handleGetAllProducts = async () => {
@@ -656,8 +680,8 @@ const ProductManagement = () => {
         stockQuantities: [0],
         clothingType: "",
       });
-      // setIsProductListVisible(true);
-
+     
+      handleGetAllProducts(); // Refresh product list
       setIsModalOpen(false);
       setIsFormVisible(false);
     } catch (error) {
@@ -681,11 +705,11 @@ const ProductManagement = () => {
           <SearchComponent />
         </Box>
         <HStack spacing={3} wrap="wrap" justifyContent="center">
-          <Button colorScheme="green" onClick={() => setIsModalOpen(true)}>
-            + Add Product
-          </Button>
-          <Button colorScheme="blue" onClick={handleGetAllProducts}>
-             = Products List
+          <Button colorScheme="green" leftIcon={<FaPlus/>} onClick={() => setIsModalOpen(true)}>
+             Add Product
+          </Button> 
+          <Button colorScheme="blue" leftIcon={<FaList/>} onClick={handleGetAllProducts}>
+              Products List
           </Button>
         </HStack>
       </Flex>
@@ -740,7 +764,7 @@ const ProductManagement = () => {
                   setNewProduct({ ...newProduct, description: e.target.value })
                 }
               />
-              <Input
+              {/* <Input
                 placeholder="Price"
                 type="number"
                 value={newProduct.price}
@@ -761,7 +785,7 @@ const ProductManagement = () => {
                     actualPrice: parseFloat(e.target.value),
                   })
                 }
-              />
+              /> */}
               <Input
                 placeholder="Selling Price"
                 type="number"
@@ -773,7 +797,7 @@ const ProductManagement = () => {
                   })
                 }
               />
-              <Input
+              {/* <Input
                 placeholder="Discount"
                 type="number"
                 value={newProduct.discount}
@@ -783,7 +807,7 @@ const ProductManagement = () => {
                     discount: parseFloat(e.target.value),
                   })
                 }
-              />
+              /> */}
               <Input
                 type="number"
                 value={newProduct.stockQuantities}
@@ -809,7 +833,7 @@ const ProductManagement = () => {
       </Modal>
 
       {/* Product List */}
-      {isProductListVisible && (
+      {/* {isProductListVisible && (
         <Box overflowX="auto" w="full">
           <Table variant="simple" mt={4}>
             <Thead>
@@ -875,8 +899,275 @@ const ProductManagement = () => {
             </Tbody>
           </Table>
         </Box>
-      )}
+      )} */}
+
+
+
+
+
+
+
+  {/* geAll productLIst */}
+         {isProductListVisible && (
+
+          <Flex direction="column" height="100%">
+          <Box flex="1" overflowY="auto"> 
+         <Table variant="simple" mt={4}>
+           <Thead>
+             <Tr>
+               <Th>Product ID</Th>
+               <Th>Product Name</Th>
+               <Th>Product Type</Th>
+               <Th>Description</Th>
+               <Th>Selling Price</Th>
+               <Th>Stock Quantity</Th>
+               <Th>Actions</Th>
+             </Tr>
+           </Thead>
+           <Tbody>
+             {currentProducts.map((product) => (
+               <Tr
+                 key={product.productID}
+                onClick={() => handleEditProduct(product.productID)}
+                _hover={{ backgroundColor: "gray.100" }}
+               >
+                 <Td>{product.productID}</Td>
+
+                 <Td>
+                   {editableProductID === product.productID ? (
+                     <Input
+                       value={product.productName}
+                       onChange={(e) =>
+                         handleProductChange(
+                           product.productID,
+                           "productName",
+                           e.target.value
+                         )
+                       }
+                     />
+                   ) : (
+                     product.productName
+                   )}
+                 </Td>
+
+                 {/* <Td>
+                 {editableProductID === product.productID ? (
+                   <Checkbox
+                     isChecked={product.clothingType === 'READYMADE'}
+                     onChange={(e) => handleProductChange(product.productID, 'clothingType', e.target.checked ? 'READYMADE' : 'UNSTITCHED')}
+                  >
+                     Readymade
+                   </Checkbox>
+                 ) : (
+                   product.clothingType
+                 )}
+               </Td> */}
+
+                 <Td>
+                   {editableProductID === product.productID ? (
+                     <VStack spacing={4}>
+                       <Checkbox
+                         isChecked={product.clothingType === "READYMADE"}
+                         onChange={(e) =>
+                           handleProductChange(
+                             product.productID,
+                             "clothingType",
+                             e.target.checked
+                               ? "READYMADE"
+                               : product.clothingType === "UNSTITCHED"
+                               ? ""
+                               : product.clothingType
+                           )
+                         }
+                       >
+                         READYMADE
+                       </Checkbox>
+
+                       <Checkbox
+                         isChecked={product.clothingType === "UNSTITCHED"}
+                         onChange={(e) =>
+                           handleProductChange(
+                             product.productID,
+                             "clothingType",
+                             e.target.checked
+                               ? "UNSTITCHED"
+                               : product.clothingType === "READYMADE"
+                              ? ""
+                               : product.clothingType
+                           )
+                         }
+                       >
+                         UNSTITCHED
+                       </Checkbox>
+                     </VStack>
+                   ) : (
+                     product.clothingType
+                   )}
+                 </Td>
+
+                 <Td>
+                   {editableProductID === product.productID ? (
+                     <Input
+                       value={product.description}
+                       onChange={(e) =>
+                         handleProductChange(
+                           product.productID,
+                           "description",
+                           e.target.value
+                         )
+                       }
+                     />
+                   ) : (
+                     product.description
+                   )}
+                 </Td>
+
+                 <Td>
+                   {editableProductID === product.productID ? (
+                     <Input
+                       type="number"
+                       value={product.sellingPrice}
+                       onChange={(e) =>
+                         handleProductChange(
+                           product.productID,
+                           "sellingPrice",
+                           parseFloat(e.target.value)
+                         )
+                       }
+                     />
+                   ) : (
+                     product.sellingPrice
+                   )}
+                </Td>
+
+                 <Td>
+                   {editableProductID === product.productID ? (
+                     <Input
+                       value={product.stockQuantities}
+                       onChange={(e) =>
+                         handleProductChange(
+                           product.productID,
+                           "stockQuantities",
+                           e.target.value
+                         )
+                       }
+                       placeholder="Enter quantities separated by commas"
+                     />
+                   ) : (
+                     product.stockQuantities
+                   )}
+                 </Td>
+
+                 {/* <Td>
+                   {editableProductID === product.productID ? (
+                     <Button
+                       colorScheme="green"
+                       onClick={() => handleSaveEdit(product.productID)}
+                     >
+                       Save
+                     </Button>
+                   ) : (
+                    <Button
+                       colorScheme="yellow"
+                       onClick={() => handleEditProduct(product.productID)}
+                     >
+                       Edit
+                     </Button>
+                   )}
+                   <Button
+                     colorScheme="red"
+                     onClick={() => handleDeleteProduct(product.productID)}
+                  >
+                     Delete
+                   </Button>
+                 </Td> */}
+                
+
+
+                 <Td>
+  <HStack spacing={4}>
+    <Tooltip label="Save changes" aria-label="Save Tooltip">
+      <IconButton
+        aria-label="Save"
+        icon={<HiSave />}
+        colorScheme="green"
+        onClick={() => handleSaveEdit(product.productID)}
+      />
+    </Tooltip>
+
+    <Tooltip label="Edit product" aria-label="Edit Tooltip">
+      <IconButton
+        aria-label="Edit"
+        icon={<HiPencilAlt />}
+        colorScheme="yellow"
+        onClick={() => handleEditProduct(product.productID)}
+      />
+    </Tooltip>
+
+    <Tooltip label="Delete product" aria-label="Delete Tooltip">
+      <IconButton
+        aria-label="Delete"
+        icon={<HiTrash />}
+        colorScheme="red"
+        onClick={() => handleDeleteProduct(product.productID)}
+      />
+    </Tooltip>
+  </HStack>
+</Td>
+
+                 
+               </Tr>
+             ))}
+           </Tbody>
+        </Table>
+        </Box>
+         {/* Pagination Controls */}
+  <Flex
+        mt="auto"
+        bottom="0"
+        width="100%"
+        justify="center"
+        py={4}
+        bg="white"
+        boxShadow="md"
+      >
+  <HStack spacing={4} mt={4}>
+        <Button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          isDisabled={currentPage === 1}
+        >
+          Prev
+        </Button>
+
+        {/* Page Numbers */}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <Button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            isActive={currentPage === index + 1}
+          >
+            {index + 1}
+          </Button>
+        ))}
+
+        <Button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          isDisabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </HStack>
+      </Flex> 
+      </Flex>
+       )}
+
+
+ 
     </VStack>
+
+
+
+
   );
 };
 

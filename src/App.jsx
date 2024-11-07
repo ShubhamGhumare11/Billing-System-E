@@ -1,12 +1,11 @@
-// App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './Components/Sidebar';
 import ProductManagement from './Components/ProductManagement';
 import InvoiceManagementPage from './Components/Invoice/InvoiceManagementPage';
 import InvoiceManager from './Components/Invoicenew/InvoiceManager';
-import SalesDashboard from './Components/SalesDashboard';
-import Inventory from './Components/Inventory'; // Import the Inventory component
+// import SalesDashboard from './Components/SalesDashboard';
+// import Inventory from './Components/Inventory'; // Import the Inventory component
 import { Box } from '@chakra-ui/react';
 
 function App() {
@@ -19,8 +18,8 @@ function App() {
             <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Product Management route */}
             <Route path="/invoicemanagement" element={<InvoiceManagementPage />} /> {/* Invoice Management route */}
             <Route path="/invoicemanager" element={<InvoiceManager />} />  {/* Invoice Manager route */}
-            <Route path="/SalesDashboard" element={<SalesDashboard />} /> {/* Sales Dashboard route */}
-            <Route path="/Inventory" element={<Inventory />} /> {/* Inventory route */}
+            {/* <Route path="/SalesDashboard" element={<SalesDashboard />} /> 
+            <Route path="/Inventory" element={<Inventory />} /> Inventory route */}
           </Routes>
         </Box>
       </Box>

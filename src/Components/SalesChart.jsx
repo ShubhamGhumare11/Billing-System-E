@@ -7,17 +7,12 @@ import {
   HStack,
   useColorModeValue
 } from "@chakra-ui/react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer
-} from "recharts";
+
+import { Tooltip, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
+
+
 import { FaChartLine } from "react-icons/fa";
-import "@fontsource/poppins/400.css";
+// import "@fontsource/poppins/400.css";
 
 const dataFetchUrl = "/salesData.json"; // Local JSON file path
 

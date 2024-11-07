@@ -1,4 +1,7 @@
-// src/data.js
+import React from 'react';
+  
+
+  // src/data.js
 
 // Sales metrics for summary
 const salesSummary = {

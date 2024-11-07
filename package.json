@@ -18,6 +18,8 @@
     "axios": "^1.7.7",
     "billing": "file:",
     "framer-motion": "^5.5.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",

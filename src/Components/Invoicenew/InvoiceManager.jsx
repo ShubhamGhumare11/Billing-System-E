@@ -218,14 +218,29 @@ const InvoiceManager = () => {
 
 
 
+ // Prepare the product details
+//  const productDetails = selectedProducts.reduce((acc, product, index) => {
+//     const discountedPrice = product.sellingPrice - (product.sellingPrice * product.discount) / 100;
+//     const subTotal = discountedPrice * product.quantity;
 
+//     // Adding the product details to the invoice object directly
+//     acc[`productName`] = product.productName;
+//     acc[`sellingPrice`] = discountedPrice;
+//     acc[`discount`] = product.discount;
+//     acc[`clothingType`] = product.clothingType;
+//     acc[`subTotalPrice`] = subTotal;
+//     // acc[`grandTotal${index + 1}`] = subTotal;
+//     acc[`sellQuantity`] = product.quantity;
+
+//     return acc;
+// }, {});
 
 
         const invoiceData = {
             invoice1Date: new Date().toISOString().split('T')[0], // Current date in 'YYYY-MM-DD'
             invoice1DueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Due date set to 30 days later
-            // grandTotal:selectedProducts.
-            
+            grandTotal:totalAmount,
+            // ...productDetails,
             // submit: true, // Set to true as per your example
             
             // Constructing the customer object to match backend format
@@ -247,7 +262,7 @@ const InvoiceManager = () => {
         console.log("Invoice data is post to backend api..."+JSON.stringify(invoiceData))
         try {
             // const response = await axios.post(  `http://localhost:8080/invoice/saveInformation?id=${customerData.customerID}`, invoiceData);
-            const response = await axios.post(`http://localhost:8080/Invoice1/saveInvoice2?${productParams}`, invoiceData);
+            const response = await axios.post(`http://localhost:8080/Invoice1/saveInvoice?${productParams}`, invoiceData);
 
             alert("Invoice generated successfully!");
             resetInvoice();

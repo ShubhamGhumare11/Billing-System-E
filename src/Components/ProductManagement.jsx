@@ -552,10 +552,10 @@ const ProductManagement = () => {
   const [newProduct, setNewProduct] = useState({
     productName: "",
     description: "",
-    price: "",
-    actualPrice: "",
+  
+    actualPrice: "0000",
     sellingPrice: "",
-    discount: "",
+    discount: "0",
     stockQuantities: [],
     clothingType: "",
   });
@@ -677,7 +677,7 @@ const [currentPage, setCurrentPage] = useState(1);
         actualPrice: "",
         sellingPrice: "",
         discount: "",
-        stockQuantities: [0],
+        stockQuantities: [],
         clothingType: "",
       });
      

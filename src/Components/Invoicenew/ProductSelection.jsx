@@ -220,7 +220,7 @@ const ProductSelection = ({ onProductSelect }) => {
 
                                     <Td>
                                     <NumberInput
-                                        min={5}
+                                        min={1}
                                         value={product.discount}
                                         onChange={(valueString) => 
                                             handleDiscountChange(product.productID, parseInt(valueString) || 1)

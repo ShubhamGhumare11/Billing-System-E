@@ -193,7 +193,7 @@ const ProductSelection = ({ onProductSelect }) => {
             <Tr>
                 {/* <Th>Product ID</Th> */}
                 <Th>Product Name</Th>
-                <Th>Actual Price</Th>
+                {/* <Th>Actual Price</Th> */}
                 <Th>Selling Price</Th>
                 <Th>Discount</Th>
                 <Th>Final Price</Th>
@@ -207,7 +207,7 @@ const ProductSelection = ({ onProductSelect }) => {
                             <Tr key={product.productID}>
                                 {/* <Td>{product.productID}</Td> */}
                                 <Td>{product.productName} </Td>
-                                <Td>{product.actualPrice} </Td>
+                                {/* <Td>{product.actualPrice} </Td> */}
 
                                 <Td>{product.sellingPrice}</Td>
 

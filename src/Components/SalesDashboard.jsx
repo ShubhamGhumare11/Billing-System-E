@@ -8,7 +8,6 @@ import TopSellingItems from "../Components/TopSellingItems"; // Import the TopSe
 
 const SalesDashboard = () => (
   <Box p={4} flex="1">
-    <Navbar />  {/* Include the Navbar at the top */}
     <SalesSummary />
     <Grid templateColumns="repeat(2, 1fr)" gap={6} mt={6}>
       {/* <SalesChart /> */}

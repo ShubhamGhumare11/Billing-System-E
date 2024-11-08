@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './Components/Sidebar';
+import Navbar from './Components/Navbar';
+
 import ProductManagement from './Components/ProductManagement';
 import InvoiceManagementPage from './Components/Invoice/InvoiceManagementPage';
 import InvoiceManager from './Components/Invoicenew/InvoiceManager';
@@ -14,7 +16,7 @@ function App() {
       <Box display="flex" height="100vh">
         <Sidebar /> {/* This renders the sidebar */}
         <Box flex="1" p={4} ml={{ base: '0', md: '0' }}>
-        
+        <Navbar/>
           <Routes>
             <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Product Management route */}
             <Route path="/invoicemanagement" element={<InvoiceManagementPage />} /> {/* Invoice Management route */}

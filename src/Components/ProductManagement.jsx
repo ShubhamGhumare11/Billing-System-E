@@ -563,7 +563,7 @@ const ProductManagement = () => {
 
 // pagination Logic
 const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20; // Adjust this value to set items per page
+  const itemsPerPage = 7; // Adjust this value to set items per page
 
   // Calculate slice for current page
   const indexOfLastProduct = currentPage * itemsPerPage;
@@ -691,9 +691,22 @@ const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <VStack spacing={4} mt={4} w="full" align="stretch">
-      <Heading as="h2" size="lg" textAlign="center">
-        Product Management
-      </Heading>
+   <Heading
+    as="h2"
+    size="xl" // Make it larger than "lg"
+    textAlign="center"
+    fontWeight="extrabold"
+    color="teal.600" // Use a color that stands out
+    background="gray.100" // Light background to highlight
+    p={2} // Padding for the background effect
+    borderRadius="md" // Round the corners slightly
+    textTransform="uppercase" // Make text uppercase for formality
+    letterSpacing="widest" // Add letter spacing
+    boxShadow="md" // Subtle shadow for a pop effect
+>
+    Product Management
+</Heading>
+
       <Flex
         wrap="wrap"
         align="center"

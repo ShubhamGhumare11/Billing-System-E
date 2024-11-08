@@ -54,14 +54,14 @@ const Sidebar = () => {
                 Product Management
               </Button>
             </Link>
-            <Link to="/invoicemanagement" onClick={onClose}>
+            {/* <Link to="/invoicemanagement" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiInfo />} w="full">
                 Invoice Management
               </Button>
-            </Link>
+            </Link> */}
             <Link to="/invoicemanager" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPhone />} w="full">
-               Invoice
+               Invoice Management
               </Button>
             </Link>
             <Link to="/SalesDashboard" onClick={onClose}>

@@ -99,7 +99,7 @@ import ProductSelection from './ProductSelection';
 import InvoiceSummary from './InvoiceSummary';
 import CustomerList from './CustomerList';
 
-import { Button, Box, Text } from '@chakra-ui/react';
+import { Button, Box, Text,Heading, Center,Flex } from '@chakra-ui/react';
 import axios from 'axios';
 
 const InvoiceManager = () => {
@@ -150,90 +150,7 @@ const InvoiceManager = () => {
 
 
 
-        
-        // const invoiceData = {
-        //     // invoiceId: crypto.randomUUID(),
-        //                 // invoiceId: null,
-
-        //     invoiceDate: new Date().toISOString().split('T')[0], // Current date in 'YYYY-MM-DD'
-        //     dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Due date set to 30 days later
-           
-        //     total: totalAmount,
-        //     // payment: [], // You can add payment details here if required
-            
-            
-        //     // invoicesDetails: selectedProducts.map(product => ({
-        //     //     // invoiceDetailID: crypto.randomUUID(), // Generate UUID for each invoice detail
-        //     //     Quantity: product.quantity,
-        //     //     // invoice: { invoiceId: invoiceId }, // Reference to the invoice
-
-        //     //     product: { productID: product.productID},
-        //     //     // product: {
-        //     //     //     productID: product.productID, // Assuming ProductsDTO has this field
-        //     //     //     productName: product.productName,
-        //     //     //     price: product.price,
-        //     //     //     // add other relevant fields from ProductsDTO if needed
-        //     //     // },
-
-
-        //     // })),
-
-
-
-
-
-
-        //     // invoicesDetails: selectedProducts.map(product => ({
-        //     //     // invoiceDetailID: crypto.randomUUID(),
-        //     //     // invoiceDetailID:null,
-        //     //     Quantity: product.quantity || 1, // Use the expected casing for Quantity
-        //     //     // invoice:invoiceId,
-        //     //     product: {
-        //     //         productID: product.productID, // Assuming this is the ID of the product
-        //     //         productName: product.productName ,// Include if you need to show name as well
-        //     //         description:product.description ,
-        //     //         price: product.price ,
-        //     //         actualPrice: product.actualPrice ,
-        //     //         sellingPrice: product.sellingPrice ,
-        //     //         discount: product.discount ,
-
-        //     //         // clothingType: product.clothingType ,
-        //     //         clothingType: "READYMADE" ,
-
-
-        //     //         stockQuantities: product.stockQuantities ,
-
-                   
-
-        //     //     }, 
-        //     //      invoice: { invoiceId: null } 
-        //     // })),
-
-
-        //     customers: customersDTO, // Ensure this object matches CustomersDTO structure
-        //     // shippingDetails: [] // Optional: include shipping details if available
-        // };
-
-
-
-
-
- // Prepare the product details
-//  const productDetails = selectedProducts.reduce((acc, product, index) => {
-//     const discountedPrice = product.sellingPrice - (product.sellingPrice * product.discount) / 100;
-//     const subTotal = discountedPrice * product.quantity;
-
-//     // Adding the product details to the invoice object directly
-//     acc[`productName`] = product.productName;
-//     acc[`sellingPrice`] = discountedPrice;
-//     acc[`discount`] = product.discount;
-//     acc[`clothingType`] = product.clothingType;
-//     acc[`subTotalPrice`] = subTotal;
-//     // acc[`grandTotal${index + 1}`] = subTotal;
-//     acc[`sellQuantity`] = product.quantity;
-
-//     return acc;
-// }, {});
+      
 
 
         const invoiceData = {
@@ -280,23 +197,51 @@ const InvoiceManager = () => {
 
     return (
         <Box>
-               {/* <Button onClick={() => setIsModalOpen(true)} colorScheme="teal" mb={4}>
-                Create Customer
-            </Button> */}
-{/* 
-            <CreateCustomer 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-                onCustomerData={handleCustomerData} 
-            />  */}
+    <Heading
+    as="h2"
+    size="xl" // Make it larger than "lg"
+    textAlign="center"
+    fontWeight="extrabold"
+    color="teal.600" // Use a color that stands out
+    background="gray.100" // Light background to highlight
+    p={2} // Padding for the background effect
+    borderRadius="md" // Round the corners slightly
+    textTransform="uppercase" // Make text uppercase for formality
+    letterSpacing="widest" // Add letter spacing
+    boxShadow="md" // Subtle shadow for a pop effect
+>
+    Billing
+</Heading>
+
                 <CreateCustomer  onCustomerData={handleCustomerData} 
             />   
             {/* <CustomerList onSelect={handleCustomerSelect} /> */}
 
             <ProductSelection onProductSelect={handleProductSelect} />
             <InvoiceSummary customer={customerData} products={selectedProducts} total={totalAmount} />
-            <Text fontWeight="bold">Total Amount: ${totalAmount}</Text>
-            <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal">Generate Invoice</Button>
+            {/* <Text fontWeight="bold">Total Amount: ${totalAmount}</Text> */}
+            {/* <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal" alignItems={Center}>Save Details</Button> */}
+            <Flex
+      direction="column"
+      justify="center"
+      align="center"
+    //   h="100vh" // Full height of the viewport
+      p={4}
+      textAlign="center"
+    >
+      <Button
+        onClick={handleGenerateInvoice}
+        mt={4}
+        // colorScheme="teal.400"
+        bg="teal.400"   
+        alignItems="center"
+        size={['sm', 'md', 'lg']} // Adjust size for different screen sizes
+        w={['80%', '60%', '40%']} // Adjust width for different screen sizes
+      >
+        Save Details
+      </Button>
+    </Flex>
+
         </Box>
     );
 };

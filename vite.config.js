@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'] // Ensure Vite resolves TypeScript and JSX files
+    extensions: ['.ts', '.tsx', '.js', '.jsx'], // Ensure Vite resolves TypeScript and JSX files
+   
   },
   
 })

@@ -11,10 +11,10 @@ const SalesDashboard = () => (
     <SalesSummary />
     <Grid templateColumns="repeat(2, 1fr)" gap={6} mt={6}>
       {/* <SalesChart /> */}
-      {/* <RecentTransactions /> */}
+      <RecentTransactions />
     </Grid>
     <Box mt={6}> {/* Add a Box around TopSellingItems for spacing */}
-      {/* <TopSellingItems /> Include the TopSellingItems component */}
+      <TopSellingItems /> Include the TopSellingItems component
     </Box>
   </Box>
 );

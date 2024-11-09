@@ -107,6 +107,7 @@ const InvoiceManager = () => {
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false); // Manage modal open/close state
+    const [gstEnabled, setGstEnabled] = useState(false);
 
     const handleCustomerData = (data) => {
         console.log("Customer Data Received in Invoice Manager:", data); // Log to confirm the data
@@ -123,14 +124,32 @@ const InvoiceManager = () => {
         setSelectedProducts(products);
     };
 
-    // const totalAmount = selectedProducts.reduce((acc, product) => acc + product.sellingPrice * product.quantity, 0);
+    const handleGstToggle = (isEnabled) => {
+        setGstEnabled(isEnabled); // Update the gstEnabled state based on ProductSelection's checkbox
+    };
+
+    // // const totalAmount = selectedProducts.reduce((acc, product) => acc + product.sellingPrice * product.quantity, 0);
+    // const calculateTotalAmount = () => {
+    //     return selectedProducts.reduce((acc, product) => {
+    //         const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
+    //         return acc + finalPrice * product.quantity;
+    //     }, 0);
+    // };
+    // const totalAmount = calculateTotalAmount();
+
     const calculateTotalAmount = () => {
         return selectedProducts.reduce((acc, product) => {
-            const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
-            return acc + finalPrice * product.quantity;
+            const discountAmount = (product.sellingPrice * product.discount) / 100;
+            const priceAfterDiscount = product.sellingPrice - discountAmount;
+            const gstAmount = gstEnabled ? (priceAfterDiscount * product.gst) / 100 : (priceAfterDiscount * 1) / 100;
+console.log("product gst in Invoicemanager"+product.gst)
+            console.log(gstAmount)
+            const finalPriceWithGst = priceAfterDiscount + gstAmount;
+            return acc + finalPriceWithGst * product.quantity;
         }, 0);
     };
     const totalAmount = calculateTotalAmount();
+    
 
 
     const handleGenerateInvoice = async () => {
@@ -217,8 +236,8 @@ const InvoiceManager = () => {
             />   
             {/* <CustomerList onSelect={handleCustomerSelect} /> */}
 
-            <ProductSelection onProductSelect={handleProductSelect} />
-            <InvoiceSummary customer={customerData} products={selectedProducts} total={totalAmount} />
+            <ProductSelection onProductSelect={handleProductSelect} onGstToggle={handleGstToggle}/>
+            <InvoiceSummary customer={customerData} products={selectedProducts} total={totalAmount} gst={selectedProducts.gst} />
             {/* <Text fontWeight="bold">Total Amount: ${totalAmount}</Text> */}
             {/* <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal" alignItems={Center}>Save Details</Button> */}
             <Flex

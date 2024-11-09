@@ -4,11 +4,11 @@ import Sidebar from './Components/Sidebar';
 import Navbar from './Components/Navbar';
 
 import ProductManagement from './Components/ProductManagement';
-import InvoiceManagementPage from './Components/Invoice/InvoiceManagementPage';
 import InvoiceManager from './Components/Invoicenew/InvoiceManager';
 import SalesDashboard from './Components/SalesDashboard';
 import Inventory from './Components/Inventory'; // Import the Inventory component
 import { Box } from '@chakra-ui/react';
+import StockManagement from './Components/StockManagement';
 
 function App() {
   return (
@@ -19,8 +19,8 @@ function App() {
         <Navbar/>
           <Routes>
             <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Product Management route */}
-            <Route path="/invoicemanagement" element={<InvoiceManagementPage />} /> {/* Invoice Management route */}
             <Route path="/invoicemanager" element={<InvoiceManager />} />  {/* Invoice Manager route */}
+            <Route path="/stockmanagement" element={<StockManagement />} />  {/* Invoice Manager route */}
             <Route path="/SalesDashboard" element={<SalesDashboard />} /> 
             <Route path="/Inventory" element={<Inventory />} /> Inventory route
           </Routes>

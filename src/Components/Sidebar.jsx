@@ -64,6 +64,11 @@ const Sidebar = () => {
                Invoice Management
               </Button>
             </Link>
+            <Link to="/stockmanagement" onClick={onClose}>
+              <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPhone />} w="full">
+               Stock Management
+              </Button>
+            </Link>
             <Link to="/SalesDashboard" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<TbFileReport />} w="full">
                 Sales Reports

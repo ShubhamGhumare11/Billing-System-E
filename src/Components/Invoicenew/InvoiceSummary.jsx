@@ -232,7 +232,7 @@ import 'jspdf-autotable';
 import logo from '../../assets/image.png';
 
 
-const InvoiceSummary = ({ customer, products, total }) => {
+const InvoiceSummary = ({ customer, products, total ,gst }) => {
     const generatePdf = () => {
         const doc = new jsPDF();
     
@@ -341,7 +341,7 @@ const InvoiceSummary = ({ customer, products, total }) => {
 
     return (
         <Box p={4} border="1px solid gray" borderRadius="md">
-            <Text fontSize="lg" fontWeight="bold">Invoice Summary</Text>
+            {/* <Text fontSize="lg" fontWeight="bold">Invoice Summary</Text>
 
             {customer && (
                 <Box mt={4}>
@@ -363,7 +363,7 @@ const InvoiceSummary = ({ customer, products, total }) => {
                         </Text>
                     );
                 })}
-            </VStack>
+            </VStack> */}
 
             <Text mt={4} fontWeight="bold">Total Amount: ${total.toFixed(2)}</Text>
 

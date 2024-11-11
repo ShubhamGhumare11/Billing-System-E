@@ -25,16 +25,15 @@
 //     //     setTotalAmount(total);
 //     // };
 
-
 //     const handleProductSelect = (product) => {
 //         setSelectedProducts((prev) => {
 //             // Check if the product is already selected
 //             const existingProduct = prev.find(p => p.productID === product.productID);
 //             if (existingProduct) {
 //                 // Update the quantity if the product is already selected
-//                 return prev.map(p => 
-//                     p.productID === product.productID 
-//                         ? { ...p, quantity: p.quantity + product.quantity } 
+//                 return prev.map(p =>
+//                     p.productID === product.productID
+//                         ? { ...p, quantity: p.quantity + product.quantity }
 //                         : p
 //                 );
 //             } else {
@@ -42,7 +41,6 @@
 //             }
 //         });
 //     };
-
 
 //     console.log(selectedProducts);
 //     // Calculate total amount
@@ -86,195 +84,191 @@
 
 // export default InvoiceManager;
 
-
-
-
-
-
-
 // InvoiceManager.jsx
-import React, { useState } from 'react';
-import CreateCustomer from './CreateCustomer';
-import ProductSelection from './ProductSelection';
-import InvoiceSummary from './InvoiceSummary';
-import CustomerList from './CustomerList';
+import React, { useState } from "react";
+import CreateCustomer from "./CreateCustomer";
+import ProductSelection from "./ProductSelection";
+import InvoiceSummary from "./InvoiceSummary";
+import CustomerList from "./CustomerList";
 
-import { Button, Box, Text,Heading, Center,Flex } from '@chakra-ui/react';
-import axios from 'axios';
+import { Button, Box, Text, Heading, Center, Flex } from "@chakra-ui/react";
+import axios from "axios";
 
 const InvoiceManager = () => {
-    const [customerData, setCustomerData] = useState(null);
-    const [selectedProducts, setSelectedProducts] = useState([]);
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Manage modal open/close state
-    const [gstEnabled, setGstEnabled] = useState(false);
+  const [customerData, setCustomerData] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Manage modal open/close state
+  const [gstEnabled, setGstEnabled] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("Online");
 
-    const handleCustomerData = (data) => {
-        console.log("Customer Data Received in Invoice Manager:", data); // Log to confirm the data
-        setCustomerData(data);
+
+  const handleCustomerData = (data) => {
+    console.log("Customer Data Received in Invoice Manager:", data); // Log to confirm the data
+    setCustomerData(data);
+  };
+
+  const handleCustomerSelect = (customer) => {
+    setCustomerData(customer); // This will set the selected customer data
+  };
+
+  const handleProductSelect = (products) => {
+    setSelectedProducts(products);
+  };
+
+  const handleGstToggle = (isEnabled) => {
+    setGstEnabled(isEnabled); // Update the gstEnabled state based on ProductSelection's checkbox
+  };
+
+  // // const totalAmount = selectedProducts.reduce((acc, product) => acc + product.sellingPrice * product.quantity, 0);
+  // const calculateTotalAmount = () => {
+  //     return selectedProducts.reduce((acc, product) => {
+  //         const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
+  //         return acc + finalPrice * product.quantity;
+  //     }, 0);
+  // };
+  // const totalAmount = calculateTotalAmount();
+
+  const calculateTotalAmount = () => {
+    return selectedProducts.reduce((acc, product) => {
+      const discountAmount = (product.sellingPrice * product.discount) / 100;
+      const priceAfterDiscount = product.sellingPrice - discountAmount;
+      const gstAmount = gstEnabled
+        ? (priceAfterDiscount * product.gst) / 100
+        : (priceAfterDiscount * 1) / 100;
+      console.log("product gst in Invoicemanager" + product.gst);
+      console.log(gstAmount);
+      const finalPriceWithGst = priceAfterDiscount + gstAmount;
+      return acc + finalPriceWithGst * product.quantity;
+    }, 0);
+  };
+  const totalAmount = calculateTotalAmount();
+
+  const handleGenerateInvoice = async () => {
+    // Constructing the CustomersDTO
+    const customersDTO = {
+      // customerID: customerData?.customerID || '', // Handle optional customerID
+      firstName: customerData?.firstName || "", // Default to empty string if not provided
+      lastName: customerData?.lastName || "", // Default to empty string if not provided
+      email: customerData?.email || "", // Default to empty string if not provided
+      phone: customerData?.phone || "", // Default to empty string if not provided
+      address: customerData?.address || "", // Default to empty string if not provided
+      // invoiceDTOS: customerData?.invoiceDTOS || [], // Default to empty array if not provided
+      // paymentDTO: customerData?.paymentDTO || null // Set to null if not provided
     };
 
+    const invoiceData = {
+      invoice1Date: new Date().toISOString().split("T")[0], // Current date in 'YYYY-MM-DD'
+      invoice1DueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0], // Due date set to 30 days later
+      grandTotal: totalAmount,
+      paymentMethod:paymentMethod,
+      // ...productDetails,
+      // submit: true, // Set to true as per your example
 
-
-    const handleCustomerSelect = (customer) => {
-        setCustomerData(customer); // This will set the selected customer data
+      // Constructing the customer object to match backend format
+      customer: {
+        firstName: customerData?.firstName || "",
+        lastName: customerData?.lastName || "",
+        email: customerData?.email || "",
+        phone: customerData?.phone || "",
+        address: customerData?.address || "",
+      },
     };
-
-    const handleProductSelect = (products) => {
-        setSelectedProducts(products);
-    };
-
-    const handleGstToggle = (isEnabled) => {
-        setGstEnabled(isEnabled); // Update the gstEnabled state based on ProductSelection's checkbox
-    };
-
-    // // const totalAmount = selectedProducts.reduce((acc, product) => acc + product.sellingPrice * product.quantity, 0);
-    // const calculateTotalAmount = () => {
-    //     return selectedProducts.reduce((acc, product) => {
-    //         const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
-    //         return acc + finalPrice * product.quantity;
-    //     }, 0);
-    // };
-    // const totalAmount = calculateTotalAmount();
-
-    const calculateTotalAmount = () => {
-        return selectedProducts.reduce((acc, product) => {
-            const discountAmount = (product.sellingPrice * product.discount) / 100;
-            const priceAfterDiscount = product.sellingPrice - discountAmount;
-            const gstAmount = gstEnabled ? (priceAfterDiscount * product.gst) / 100 : (priceAfterDiscount * 1) / 100;
-console.log("product gst in Invoicemanager"+product.gst)
-            console.log(gstAmount)
-            const finalPriceWithGst = priceAfterDiscount + gstAmount;
-            return acc + finalPriceWithGst * product.quantity;
-        }, 0);
-    };
-    const totalAmount = calculateTotalAmount();
-    
-
-
-    const handleGenerateInvoice = async () => {
-         // Constructing the CustomersDTO
-         const customersDTO = {
-            // customerID: customerData?.customerID || '', // Handle optional customerID
-            firstName: customerData?.firstName || '', // Default to empty string if not provided
-            lastName: customerData?.lastName || '', // Default to empty string if not provided
-            email: customerData?.email || '', // Default to empty string if not provided
-            phone: customerData?.phone || '', // Default to empty string if not provided
-            address: customerData?.address || '', // Default to empty string if not provided
-            // invoiceDTOS: customerData?.invoiceDTOS || [], // Default to empty array if not provided
-            // paymentDTO: customerData?.paymentDTO || null // Set to null if not provided
-        };
-
-
-
-
-
-      
-
-
-        const invoiceData = {
-            invoice1Date: new Date().toISOString().split('T')[0], // Current date in 'YYYY-MM-DD'
-            invoice1DueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Due date set to 30 days later
-            grandTotal:totalAmount,
-            // ...productDetails,
-            // submit: true, // Set to true as per your example
-            
-            // Constructing the customer object to match backend format
-            customer: {
-                firstName: customerData?.firstName || '',
-                lastName: customerData?.lastName || '',
-                email: customerData?.email || '',
-                phone: customerData?.phone || '',
-                address: customerData?.address || '',
-            }
-        };
-
 
     // Constructing the URL with multiple instances of productNames and sellQuantity parameters
-    const productParams = selectedProducts.map(
-        (product, index) => `productNames=${encodeURIComponent(product.productName)}&sellQuantity=${product.quantity || 1}`
-    ).join('&');
+    const productParams = selectedProducts
+      .map(
+        (product, index) =>
+          `productNames=${encodeURIComponent(
+            product.productName
+          )}&sellQuantity=${product.quantity || 1}`
+      )
+      .join("&");
 
-        console.log("Invoice data is post to backend api..."+JSON.stringify(invoiceData))
-        try {
-            // const response = await axios.post(  `http://localhost:8080/invoice/saveInformation?id=${customerData.customerID}`, invoiceData);
-            const response = await axios.post(`http://localhost:8080/Invoice1/saveInvoice?${productParams}`, invoiceData);
-
-            alert("Invoice generated successfully!");
-            resetInvoice();
-        } catch (error) {
-            console.error("Error generating invoice:", error);
-            alert("Error generating invoice. Please try again.");
-        }
-    };
-
-    
-    const resetInvoice = () => {
-        setCustomerData(null);
-        setSelectedProducts([]);
-    };
-
-    return (
-        <Box>
-    <Heading
-    as="h2"
-    size="xl" // Make it larger than "lg"
-    textAlign="center"
-    fontWeight="extrabold"
-    color="teal.600" // Use a color that stands out
-    background="gray.100" // Light background to highlight
-    p={2} // Padding for the background effect
-    borderRadius="md" // Round the corners slightly
-    textTransform="uppercase" // Make text uppercase for formality
-    letterSpacing="widest" // Add letter spacing
-    boxShadow="md" // Subtle shadow for a pop effect
->
-    Billing
-</Heading>
-
-                <CreateCustomer  onCustomerData={handleCustomerData} 
-            />   
-            {/* <CustomerList onSelect={handleCustomerSelect} /> */}
-
-            <ProductSelection onProductSelect={handleProductSelect} onGstToggle={handleGstToggle}/>
-            <InvoiceSummary customer={customerData} products={selectedProducts} total={totalAmount} gst={selectedProducts.gst} />
-            {/* <Text fontWeight="bold">Total Amount: ${totalAmount}</Text> */}
-            {/* <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal" alignItems={Center}>Save Details</Button> */}
-            <Flex
-      direction="column"
-      justify="center"
-      align="center"
-    //   h="100vh" // Full height of the viewport
-      p={4}
-      textAlign="center"
-    >
-      <Button
-        onClick={handleGenerateInvoice}
-        mt={4}
-        // colorScheme="teal.400"
-        bg="teal.400"   
-        alignItems="center"
-        size={['sm', 'md', 'lg']} // Adjust size for different screen sizes
-        w={['80%', '60%', '40%']} // Adjust width for different screen sizes
-      >
-        Save Details
-      </Button>
-    </Flex>
-
-        </Box>
+    console.log(
+      "Invoice data is post to backend api..." + JSON.stringify(invoiceData)
     );
+    try {
+      // const response = await axios.post(  `http://localhost:8080/invoice/saveInformation?id=${customerData.customerID}`, invoiceData);
+      const response = await axios.post(
+        `http://localhost:8080/Invoice1/saveInvoice?${productParams}`,
+        invoiceData
+      );
+
+      alert("Invoice generated successfully!");
+      resetInvoice();
+    } catch (error) {
+      console.error("Error generating invoice:", error);
+      alert("Error generating invoice. Please try again.");
+    }
+  };
+
+  const resetInvoice = () => {
+    console.log("In InvoiceManager ,resetInvoice ()")
+    setCustomerData(null);
+    setSelectedProducts([]);
+        setPaymentMethod("Online"); // Reset payment method to default
+
+  };
+
+  return (
+    <Box>
+      <Heading
+        as="h2"
+        size="xl" // Make it larger than "lg"
+        textAlign="center"
+        fontWeight="extrabold"
+        color="teal.600" // Use a color that stands out
+        background="gray.100" // Light background to highlight
+        my={5}
+        p={2} // Padding for the background effect
+        borderRadius="md" // Round the corners slightly
+        textTransform="uppercase" // Make text uppercase for formality
+        letterSpacing="widest" // Add letter spacing
+        boxShadow="md" // Subtle shadow for a pop effect
+      >
+        Billing
+      </Heading>
+
+      <CreateCustomer onCustomerData={handleCustomerData} />
+      {/* <CustomerList onSelect={handleCustomerSelect} /> */}
+
+      <ProductSelection
+        onProductSelect={handleProductSelect}
+        onGstToggle={handleGstToggle}
+          onPaymentMethodChange={(method) => setPaymentMethod(method)}
+      />
+      <InvoiceSummary
+        customer={customerData}
+        products={selectedProducts}
+        total={totalAmount}
+        gst={selectedProducts.gst}
+      />
+      {/* <Text fontWeight="bold">Total Amount: ${totalAmount}</Text> */}
+      {/* <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal" alignItems={Center}>Save Details</Button> */}
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        p={4}
+        textAlign="center"
+      >
+        <Button
+          onClick={handleGenerateInvoice}
+          mt={4}
+          // colorScheme="teal.400"
+          bg="teal.400"
+          alignItems="center"
+          size={["sm", "md", "lg"]} // Adjust size for different screen sizes
+          w={["80%", "60%", "40%"]} // Adjust width for different screen sizes
+        >
+          Save Invoice
+        </Button>
+      </Flex>
+    </Box>
+  );
 };
 
 export default InvoiceManager;
-
-
-
-
-
-
-
-
-
-
-
-

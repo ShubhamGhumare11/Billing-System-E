@@ -1,39 +1,47 @@
 [
-    {
-      "id": 1,
-      "customer": "John Doe",
-      "date": "2024-11-01",
-      "amount": 150.0
-    },
-    {
-      "id": 2,
-      "customer": "Jane Smith",
-      "date": "2024-11-02",
-      "amount": -75.5
-    },
-    {
-      "id": 3,
-      "customer": "Sam Wilson",
-      "date": "2024-11-03",
-      "amount": 200.0
-    },
-    {
-        "id": 4,
-        "customer": "John Doe",
-        "date": "2024-11-01",
-        "amount": 150.0
-      },
-      {
-        "id": 5,
-        "customer": "Jane Smith",
-        "date": "2024-11-02",
-        "amount": -75.5
-      },
-      {
-        "id": 6,
-        "customer": "Sam Wilson",
-        "date": "2024-11-03",
-        "amount": 200.0
-      }
-  ]
-  
+  {
+    "invoiceId": "INV-001",
+    "customer": "John Doe",
+    "date": "2024-11-01",
+    "amount": 150.75,
+    "paymentMethod": "Credit Card",
+    "cgstId": "CGST-1001",
+    "sgstId": "SGST-2001"
+  },
+  {
+    "invoiceId": "INV-002",
+    "customer": "Jane Smith",
+    "date": "2024-11-02",
+    "amount": -45.50,
+    "paymentMethod": "Bank Transfer",
+    "cgstId": "CGST-1002",
+    "sgstId": "SGST-2002"
+  },
+  {
+    "invoiceId": "INV-003",
+    "customer": "Alice Johnson",
+    "date": "2024-11-02",
+    "amount": 200.00,
+    "paymentMethod": "Cash",
+    "cgstId": "CGST-1003",
+    "sgstId": "SGST-2003"
+  },
+  {
+    "invoiceId": "INV-004",
+    "customer": "John Doe",
+    "date": "2024-11-03",
+    "amount": 300.25,
+    "paymentMethod": "Credit Card",
+    "cgstId": "CGST-1004",
+    "sgstId": "SGST-2004"
+  },
+  {
+    "invoiceId": "INV-005",
+    "customer": "Jane Smith",
+    "date": "2024-11-03",
+    "amount": 120.00,
+    "paymentMethod": "Debit Card",
+    "cgstId": "CGST-1005",
+    "sgstId": "SGST-2005"
+  }
+]

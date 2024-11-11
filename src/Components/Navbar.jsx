@@ -92,15 +92,17 @@ const Navbar = () => {
         {/* Logo or Title */}
         <Box>
           <Link to="/home"> {/* Logo or Title Link */}
-            <Button colorScheme="teal" variant="link" fontSize="xl" fontWeight="bold">
-              MyApp
+            <Button colorScheme="white" variant="link" fontSize="xl" fontWeight="bold">
+             
             </Button>
           </Link>
         </Box>
 
         {/* Nav Links (Visible on medium screens and larger) */}
         <HStack spacing={4} display={display}>
-          <Link to="/home">
+
+        
+          {/* <Link to="/home">
             <Button variant="link" color="white" fontWeight="bold">
               Home
             </Button>
@@ -119,7 +121,7 @@ const Navbar = () => {
             <Button variant="link" color="white" fontWeight="bold">
               Contact
             </Button>
-          </Link>
+          </Link> */}
         </HStack>
 
         {/* Avatar and Hamburger Menu for Mobile */}
@@ -140,7 +142,9 @@ const Navbar = () => {
       {/* Hamburger Menu for Mobile */}
       {isOpen && (
         <Box display={{ base: 'block', md: 'none' }} p={4}>
-          <Link to="/home">
+
+        <Text>GA_BillingSYSTEM</Text>
+          {/* <Link to="/home">
             <Button variant="link" color="teal.600" width="full">
               Home
             </Button>
@@ -159,7 +163,7 @@ const Navbar = () => {
             <Button variant="link" color="teal.600" width="full">
               Contact
             </Button>
-          </Link>
+          </Link> */}
         </Box>
       )}
     </Box>

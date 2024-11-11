@@ -74,11 +74,11 @@ const Sidebar = () => {
                 Sales Reports
               </Button>
             </Link>
-            <Link to="/Inventory" onClick={onClose}>
+            {/* <Link to="/Inventory" onClick={onClose}>
               <Button variant="link" colorScheme="whiteAlpha" leftIcon={<FiPackage />} w="full">
                 Inventory
               </Button>
-            </Link>
+            </Link> */}
           </VStack>
         </Box>
       </Box>

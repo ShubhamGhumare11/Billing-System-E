@@ -18,6 +18,7 @@ function App() {
         <Box flex="1" p={4} ml={{ base: '0', md: '0' }}>
         <Navbar/>
           <Routes>
+          <Route path="/" element={<ProductManagement />} />
             <Route path="/ProductManagement" element={<ProductManagement />} /> {/* Product Management route */}
             <Route path="/invoicemanager" element={<InvoiceManager />} />  {/* Invoice Manager route */}
             <Route path="/stockmanagement" element={<StockManagement />} />  {/* Invoice Manager route */}

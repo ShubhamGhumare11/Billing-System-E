@@ -103,6 +103,116 @@
 
 
 
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Box, Text, SimpleGrid } from "@chakra-ui/react";
+// import { FaChartLine, FaCalendarAlt, FaShoppingCart, FaMoneyBillWave } from "react-icons/fa";
+// import { motion } from "framer-motion";
+
+// const MotionBox = motion(Box);
+
+// const SummaryBox = ({ icon: Icon, value, label, bgColor, borderColor }) => (
+//   <MotionBox
+//     bg={bgColor}
+//     color="blue.900"
+//     p={6}
+//     borderRadius="md"
+//     boxShadow="lg"
+//     border={`2px solid ${borderColor}`}
+//     _hover={{ bg: "yellow.100", color: "blue.700" }}
+//     display="flex"
+//     alignItems="center"
+//     justifyContent="space-between"
+//     whileHover={{ scale: 1.05 }}
+//     transition={{ duration: 0.2 }}
+//   >
+//     <Icon style={{ fontSize: "24px", marginRight: "10px", color: "blue" }} />
+//     <Box textAlign="right">
+//       <Text fontSize="2xl" fontWeight="bold">
+//         {value !== undefined ? `$${value}` : "Loading..."}
+//       </Text>
+//       <Text>{label}</Text>
+//     </Box>
+//   </MotionBox>
+// );
+
+// const SalesSummary = () => {
+//   const [data, setData] = useState({
+//     dailySales: 0,
+//     monthlySales: 0,
+//     yearlySales: 0,
+//     totalSales: 0,
+//   });
+
+//   useEffect(() => {
+//     const fetchSalesData = async () => {
+//       try {
+//         const [dailyResponse, monthlyResponse, yearlyResponse, totalResponse] = await Promise.all([
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "daily" } }),
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "monthly" } }),
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "yearly" } }),
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "all" } }),
+//         ]);
+
+//         console.log("Responses:", {
+//           daily: dailyResponse.data,
+//           monthly: monthlyResponse.data,
+//           yearly: yearlyResponse.data,
+//           total: totalResponse.data,
+//         });
+
+//         setData({
+//           dailySales: dailyResponse.data.object,
+//           monthlySales: monthlyResponse.data.object,
+//           yearlySales: yearlyResponse.data.object,
+//           totalSales: totalResponse.data.object,
+//         });
+//       } catch (error) {
+//         console.error("Error fetching sales data:", error);
+//       }
+//     };
+
+//     fetchSalesData();
+//   }, []);
+
+//   return (
+//     <SimpleGrid columns={[1, 2, 2, 4]} spacing={4} mt={4}>
+//       <SummaryBox
+//         icon={FaChartLine}
+//         value={data.dailySales}
+//         label="Daily Sales"
+//         bgColor="green.200"
+//         borderColor="green.600"
+//       />
+//       <SummaryBox
+//         icon={FaCalendarAlt}
+//         value={data.monthlySales}
+//         label="Monthly Sales"
+//         bgColor="blue.200"
+//         borderColor="blue.600"
+//       />
+//       <SummaryBox
+//         icon={FaShoppingCart}
+//         value={data.yearlySales}
+//         label="Yearly Sales"
+//         bgColor="purple.200"
+//         borderColor="purple.600"
+//       />
+//       <SummaryBox
+//         icon={FaMoneyBillWave}
+//         value={data.totalSales}
+//         label="Total Sales"
+//         bgColor="orange.200"
+//         borderColor="orange.600"
+//       />
+//     </SimpleGrid>
+//   );
+// };
+
+// export default SalesSummary;
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Text, SimpleGrid } from "@chakra-ui/react";
@@ -129,7 +239,7 @@ const SummaryBox = ({ icon: Icon, value, label, bgColor, borderColor }) => (
     <Icon style={{ fontSize: "24px", marginRight: "10px", color: "blue" }} />
     <Box textAlign="right">
       <Text fontSize="2xl" fontWeight="bold">
-        {value !== undefined ? `$${value}` : "Loading..."}
+        {value}
       </Text>
       <Text>{label}</Text>
     </Box>
@@ -144,6 +254,7 @@ const SalesSummary = () => {
     totalSales: 0,
   });
 
+  // Fetch sales data for different periods (daily, monthly, yearly, total)
   useEffect(() => {
     const fetchSalesData = async () => {
       try {
@@ -154,18 +265,14 @@ const SalesSummary = () => {
           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "all" } }),
         ]);
 
-        console.log("Responses:", {
-          daily: dailyResponse.data,
-          monthly: monthlyResponse.data,
-          yearly: yearlyResponse.data,
-          total: totalResponse.data,
-        });
-
+        // Assuming the response structure is like:
+        // { message: '...', object: 260.0, hasError: false }
+        
         setData({
-          dailySales: dailyResponse.data.object[0],
-          monthlySales: monthlyResponse.data.object[0],
+          dailySales: dailyResponse.data.object,
+          monthlySales: monthlyResponse.data.object,
           yearlySales: yearlyResponse.data.object,
-          totalSales: totalResponse.data.object[0],
+          totalSales: totalResponse.data.object,
         });
       } catch (error) {
         console.error("Error fetching sales data:", error);
@@ -179,28 +286,28 @@ const SalesSummary = () => {
     <SimpleGrid columns={[1, 2, 2, 4]} spacing={4} mt={4}>
       <SummaryBox
         icon={FaChartLine}
-        value={data.dailySales}
+        value={`$${data.dailySales}`}
         label="Daily Sales"
         bgColor="green.200"
         borderColor="green.600"
       />
       <SummaryBox
         icon={FaCalendarAlt}
-        value={data.monthlySales}
+        value={`$${data.monthlySales}`}
         label="Monthly Sales"
         bgColor="blue.200"
         borderColor="blue.600"
       />
       <SummaryBox
         icon={FaShoppingCart}
-        value={data.yearlySales}
+        value={`$${data.yearlySales}`}
         label="Yearly Sales"
         bgColor="purple.200"
         borderColor="purple.600"
       />
       <SummaryBox
         icon={FaMoneyBillWave}
-        value={data.totalSales}
+        value={`$${data.totalSales}`}
         label="Total Sales"
         bgColor="orange.200"
         borderColor="orange.600"
@@ -210,3 +317,117 @@ const SalesSummary = () => {
 };
 
 export default SalesSummary;
+
+
+
+
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Box, Text, SimpleGrid } from "@chakra-ui/react";
+// import { FaChartLine, FaCalendarAlt, FaShoppingCart, FaMoneyBillWave } from "react-icons/fa";
+// import { motion } from "framer-motion";
+
+// const MotionBox = motion(Box);
+
+// const SummaryBox = ({ icon: Icon, value, label, bgColor, borderColor }) => (
+//   <MotionBox
+//     bg={bgColor}
+//     color="blue.900"
+//     p={6}
+//     borderRadius="md"
+//     boxShadow="lg"
+//     border={`2px solid ${borderColor}`}
+//     _hover={{ bg: "yellow.100", color: "blue.700" }}
+//     display="flex"
+//     alignItems="center"
+//     justifyContent="space-between"
+//     whileHover={{ scale: 1.05 }}
+//     transition={{ duration: 0.2 }}
+//   >
+//     <Icon style={{ fontSize: "24px", marginRight: "10px", color: "blue" }} />
+//     <Box textAlign="right">
+//       <Text fontSize="2xl" fontWeight="bold">
+//         {value !== undefined ? `$${value}` : "Loading..."}
+//       </Text>
+//       <Text>{label}</Text>
+//     </Box>
+//   </MotionBox>
+// );
+
+// const SalesSummary = () => {
+//   const [data, setData] = useState({
+//     dailySales: 0,
+//     monthlySales: 0,
+//     yearlySales: 0,
+//     totalSales: 0,
+//   });
+
+//   useEffect(() => {
+//     const fetchSalesData = async () => {
+//       try {
+//         const [dailyResponse, monthlyResponse, yearlyResponse, totalResponse] = await Promise.all([
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "daily" } }),
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "monthly" } }),
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "yearly" } }),
+//           axios.get("http://localhost:8080/sell/AllSubtotals", { params: { period: "all" } }),
+//         ]);
+
+//         // Debugging response
+//         console.log("Responses:", {
+//           daily: dailyResponse.data,
+//           monthly: monthlyResponse.data,
+//           yearly: yearlyResponse.data,
+//           total: totalResponse.data,
+//         });
+
+//         // Assuming the response data is an array of subtotals
+//         // If the response contains multiple items (like different products for the period), you might need to sum them up
+//         setData({
+//           dailySales: dailyResponse.data.object.reduce((acc, val) => acc + val, 0), // Summing up the daily subtotals
+//           monthlySales: monthlyResponse.data.object.reduce((acc, val) => acc + val, 0), // Summing up the monthly subtotals
+//           yearlySales: yearlyResponse.data.object.reduce((acc, val) => acc + val, 0), // Summing up the yearly subtotals
+//           totalSales: totalResponse.data.object.reduce((acc, val) => acc + val, 0), // Summing up the total subtotals
+//         });
+//       } catch (error) {
+//         console.error("Error fetching sales data:", error);
+//       }
+//     };
+
+//     fetchSalesData();
+//   }, []);
+
+//   return (
+//     <SimpleGrid columns={[1, 2, 2, 4]} spacing={4} mt={4}>
+//       <SummaryBox
+//         icon={FaChartLine}
+//         value={data.dailySales}
+//         label="Daily Sales"
+//         bgColor="green.200"
+//         borderColor="green.600"
+//       />
+//       <SummaryBox
+//         icon={FaCalendarAlt}
+//         value={data.monthlySales}
+//         label="Monthly Sales"
+//         bgColor="blue.200"
+//         borderColor="blue.600"
+//       />
+//       <SummaryBox
+//         icon={FaShoppingCart}
+//         value={data.yearlySales}
+//         label="Yearly Sales"
+//         bgColor="purple.200"
+//         borderColor="purple.600"
+//       />
+//       <SummaryBox
+//         icon={FaMoneyBillWave}
+//         value={data.totalSales}
+//         label="Total Sales"
+//         bgColor="orange.200"
+//         borderColor="orange.600"
+//       />
+//     </SimpleGrid>
+//   );
+// };
+
+// export default SalesSummary;

@@ -116,8 +116,6 @@
 
 
 
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -145,6 +143,9 @@ const RecentTransactions = () => {
 
   const bg = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
+
+  const CGST_PERCENT = 18;
+  const SGST_PERCENT = 10;
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -193,13 +194,14 @@ const RecentTransactions = () => {
       .reduce((acc, t) => acc + t.amount, 0),
   };
 
+  // Calculate CGST and SGST totals based on the default percentages
   const cgstTotal = filteredTransactions.reduce(
-    (acc, t) => acc + (t.cgstId ? 1 : 0), // Example calculation
+    (acc, t) => acc + (t.amount * CGST_PERCENT) / 100,
     0
   );
 
   const sgstTotal = filteredTransactions.reduce(
-    (acc, t) => acc + (t.sgstId ? 1 : 0), // Example calculation
+    (acc, t) => acc + (t.amount * SGST_PERCENT) / 100,
     0
   );
 
@@ -225,18 +227,16 @@ const RecentTransactions = () => {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            placeholder="Start Date"
           />
           <Input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            placeholder="End Date"
           />
         </HStack>
 
         {/* Transactions Table */}
-        <Table variant="simple" size="sm">
+        <Table variant="simple" mt={4}>
           <Thead>
             <Tr>
               <Th>Invoice ID</Th>
@@ -244,8 +244,8 @@ const RecentTransactions = () => {
               <Th>Date</Th>
               <Th>Amount</Th>
               <Th>Payment Method</Th>
-              <Th>CGST ID</Th>
-              <Th>SGST ID</Th>
+              <Th>CGST (18%)</Th>
+              <Th>SGST (10%)</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -256,43 +256,34 @@ const RecentTransactions = () => {
                 <Td>{transaction.date}</Td>
                 <Td>{transaction.amount.toFixed(2)}</Td>
                 <Td>{transaction.paymentMethod}</Td>
-                <Td>{transaction.cgstId}</Td>
-                <Td>{transaction.sgstId}</Td>
+                <Td>{((transaction.amount * CGST_PERCENT) / 100).toFixed(2)}</Td>
+                <Td>{((transaction.amount * SGST_PERCENT) / 100).toFixed(2)}</Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
 
-        {/* Totals Summary Table */}
-        <Box mt={6}>
-          <Text fontSize="lg" fontWeight="bold" mb={2}>
-            Summary
-          </Text>
-          <Table variant="simple" size="sm">
-            <Tbody>
-              <Tr>
-                <Td>Total Transaction Amount</Td>
-                <Td>{totalAmount.toFixed(2)}</Td>
-              </Tr>
-              <Tr>
-                <Td>Total Online Transactions</Td>
-                <Td>{paymentMethodTotals.online.toFixed(2)}</Td>
-              </Tr>
-              <Tr>
-                <Td>Total Cash Transactions</Td>
-                <Td>{paymentMethodTotals.cash.toFixed(2)}</Td>
-              </Tr>
-              <Tr>
-                <Td>Total CGST IDs</Td>
-                <Td>{cgstTotal}</Td>
-              </Tr>
-              <Tr>
-                <Td>Total SGST IDs</Td>
-                <Td>{sgstTotal}</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </Box>
+        {/* Summary Table */}
+        <Table variant="simple" mt={4}>
+          <Thead>
+            <Tr>
+              <Th>Total Amount</Th>
+              <Th>Online Transactions Total</Th>
+              <Th>Cash Transactions Total</Th>
+              <Th>Total CGST Amount</Th>
+              <Th>Total SGST Amount</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>{totalAmount.toFixed(2)}</Td>
+              <Td>{paymentMethodTotals.online.toFixed(2)}</Td>
+              <Td>{paymentMethodTotals.cash.toFixed(2)}</Td>
+              <Td>{cgstTotal.toFixed(2)}</Td>
+              <Td>{sgstTotal.toFixed(2)}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
       </VStack>
     </Box>
   );

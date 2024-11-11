@@ -316,7 +316,7 @@ import {
   FormLabel,
   HStack,
   VStack,
-  useToast,
+  useToast,Flex,
 } from '@chakra-ui/react';
 
 const CreateCustomer = ({ onCustomerData }) => {
@@ -327,11 +327,26 @@ const CreateCustomer = ({ onCustomerData }) => {
     phone: '',
     address: '',
   });
+
+   // Track the validity of each field
+   const [isFirstNameValid, setIsFirstNameValid] = useState(false);
+   const [isEmailValid, setIsEmailValid] = useState(false);
+   const [isPhoneValid, setIsPhoneValid] = useState(false);
+  //  const [isAddressValid, setIsAddressValid] = useState(false);
   const toast = useToast();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCustomerData({ ...customerData, [name]: value });
+     // Validation logic for each field
+     if (name === 'firstName') {
+      setIsFirstNameValid(value.trim() !== '');
+    } else if (name === 'email') {
+      setIsEmailValid(value.trim() !== '' && /\S+@\S+\.\S+/.test(value)); // Email validation regex
+    } else if (name === 'phone') {
+      setIsPhoneValid(value.trim() !== '' && /^\d{10}$/.test(value)); // Phone number validation (10 digits)
+    } 
+  
   };
 
   const handleSubmit = async (e) => {
@@ -378,10 +393,19 @@ const CreateCustomer = ({ onCustomerData }) => {
       });
     }
   };
+  const isFormValid = isFirstNameValid && isEmailValid && isPhoneValid ;
 
   return (
     <Box as="form" onSubmit={handleSubmit} p="2rem" maxW="50rem" mx="auto">
       <VStack spacing="1.5rem" align="stretch">
+      
+      <Flex
+        wrap="wrap"
+        align="center"
+        justify="space-between"
+        direction={{ base: 'column', md: 'row' }}
+        gap={4}
+      >
         <HStack spacing="1rem" wrap={{ base: 'wrap', md: 'nowrap' }}>
           <FormControl  flex="1" minWidth="12rem">
             <FormLabel fontSize="1rem"> Name</FormLabel>
@@ -392,7 +416,7 @@ const CreateCustomer = ({ onCustomerData }) => {
               placeholder="Enter first name"
               fontSize="1rem"
               padding="0.5rem"
-              minWidth={{ base: '100%', md: '12rem' }}
+              minWidth={{ base: '100%', md: '12rem' }}width="100%"
             />
           </FormControl>
 
@@ -419,7 +443,7 @@ const CreateCustomer = ({ onCustomerData }) => {
               placeholder="Enter email"
               fontSize="1rem"
               padding="0.5rem"
-              minWidth={{ base: '100%', md: '12rem' }}
+              minWidth={{ base: '100%', md: '12rem' }}width="100%"
             />
           </FormControl>
 
@@ -433,7 +457,7 @@ const CreateCustomer = ({ onCustomerData }) => {
               placeholder="Enter phone number"
               fontSize="1rem"
               padding="0.5rem"
-              minWidth={{ base: '100%', md: '12rem' }}
+              minWidth={{ base: '100%', md: '12rem' }} width="100%"
             />
           </FormControl>
 
@@ -443,7 +467,7 @@ const CreateCustomer = ({ onCustomerData }) => {
           width={{ base: '100%', md: '10rem' }}
           alignSelf={{ base: 'stretch', md: 'flex-end' }}
           fontSize="0.75rem"
-          padding="0.75rem"
+          padding="0.75rem" isDisabled={!isFormValid}
         >
           Create Customer
         </Button>
@@ -466,7 +490,7 @@ const CreateCustomer = ({ onCustomerData }) => {
           </FormControl>
         </HStack> */}
 
-     
+        </Flex>
       </VStack>
     </Box>
   );

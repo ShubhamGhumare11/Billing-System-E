@@ -574,7 +574,9 @@ const [currentPage, setCurrentPage] = useState(1);
 
 
 
-
+  useEffect(() => {
+handleGetAllProducts()
+  }, []);
 
 
 
@@ -721,9 +723,9 @@ const [currentPage, setCurrentPage] = useState(1);
           <Button colorScheme="green" leftIcon={<FaPlus/>} onClick={() => setIsModalOpen(true)}>
              Add Product
           </Button> 
-          <Button colorScheme="blue" leftIcon={<FaList/>} onClick={handleGetAllProducts}>
+          {/* <Button colorScheme="blue" leftIcon={<FaList/>} onClick={handleGetAllProducts}>
               Products List
-          </Button>
+          </Button> */}
         </HStack>
       </Flex>
 

@@ -98,6 +98,8 @@
 
 // export default ProductSelection;
 
+
+
 import React, { useState } from "react";
 import {
   Box,
@@ -119,7 +121,7 @@ import {
   Tooltip,
   Text,
   Checkbox,
-  Tag,
+  Tag,Flex,Select,
 } from "@chakra-ui/react";
 import { HiTrash } from "react-icons/hi";
 import SearchComponent from "./SearchProductsInInvoice";
@@ -129,6 +131,8 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
   const [quantity, setQuantity] = useState(1);
   const [isGstEnabled, setIsGstEnabled] = useState(false);
   const [gstEnabled, setGstEnabled] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('Online'); // Default payment method
+
 
   const handleProductSelect = (product) => {
     const productWithQuantity = { ...product, quantity };
@@ -241,11 +245,46 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
     return <Tag colorScheme="green">{stockQuantities}</Tag>;
   };
 
+
+
+
+  const handlePaymentMethodChange = (event) => {
+    const method = event.target.value;
+    setPaymentMethod(method);
+
+    if (selectedProduct) {
+      // Update selected product with the new payment method
+      const updatedProduct = { ...selectedProduct, paymentMethod: method };
+      setSelectedProducts(updatedProduct);
+      onProductSelect(updatedProduct);
+    }
+  };
+
+
+
+
+
+
+
   // const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
   return (
     <Box p={4} border="1px solid gray" borderRadius="md">
       <VStack spacing={3} align="stretch">
+
+
+      <Flex
+        wrap="wrap"
+        align="center"
+        justify="space-between"
+        direction={{ base: 'column', md: 'row' }}
+        gap={4}
+      >
+        <Box flex="1" maxW={{ base: '100%', md: '500px' }} w="full">
         <SearchComponent onProductSelect={handleProductSelect} />
+        </Box>
+     
+      </Flex>
+
 
         <HStack justify="flex-start">
           <Checkbox
@@ -255,6 +294,15 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
           >
             Apply GST
           </Checkbox>
+
+          <Select
+        placeholder="Select Payment Method"
+        value={paymentMethod}
+        onChange={handlePaymentMethodChange}
+      >
+        <option value="Online">Online</option>
+        <option value="Cash">Cash</option>
+      </Select>
         </HStack>
 
         {/* Display selected products in a table */}

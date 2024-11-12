@@ -144,8 +144,8 @@ const RecentTransactions = () => {
   const bg = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
 
-  const CGST_PERCENT = 18;
-  const SGST_PERCENT = 10;
+  const CGST_PERCENT = 2.5;
+  const SGST_PERCENT = 2.5;
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -194,14 +194,15 @@ const RecentTransactions = () => {
       .reduce((acc, t) => acc + t.amount, 0),
   };
 
-  // Calculate CGST and SGST totals based on the default percentages
+  // Calculate CGST RS and SGST RS totals based Amount
   const cgstTotal = filteredTransactions.reduce(
-    (acc, t) => acc + (t.amount * CGST_PERCENT) / 100,
+    (acc, t) => acc + parseFloat(t.cgstIdRs), // Sum CGST Rs values
     0
   );
-
+  
+  // Calculate total SGST Rs amount
   const sgstTotal = filteredTransactions.reduce(
-    (acc, t) => acc + (t.amount * SGST_PERCENT) / 100,
+    (acc, t) => acc + parseFloat(t.sgstIdRs), // Sum SGST Rs values
     0
   );
 
@@ -239,25 +240,32 @@ const RecentTransactions = () => {
         <Table variant="simple" mt={4}>
           <Thead>
             <Tr>
-              <Th>Invoice ID</Th>
+           
+              <Th>Invoice NO </Th>
               <Th>Customer</Th>
               <Th>Date</Th>
               <Th>Amount</Th>
               <Th>Payment Method</Th>
-              <Th>CGST (18%)</Th>
-              <Th>SGST (10%)</Th>
+              <Th>CGST (RS)</Th>
+              <Th>SGST (RS)</Th>
+              <Th>CGST (%)</Th>
+              <Th>SGST (%)</Th>
+
             </Tr>
           </Thead>
           <Tbody>
             {filteredTransactions.map((transaction) => (
               <Tr key={transaction.invoiceId}>
-                <Td>{transaction.invoiceId}</Td>
+                <Td>{transaction.invoiceNo}</Td>
                 <Td>{transaction.customer}</Td>
                 <Td>{transaction.date}</Td>
                 <Td>{transaction.amount.toFixed(2)}</Td>
                 <Td>{transaction.paymentMethod}</Td>
-                <Td>{((transaction.amount * CGST_PERCENT) / 100).toFixed(2)}</Td>
-                <Td>{((transaction.amount * SGST_PERCENT) / 100).toFixed(2)}</Td>
+                <Td>{transaction.cgstIdRs}</Td>
+                <Td>{transaction.sgstIdRs}</Td>
+                <Td>{transaction.cgstIdper}</Td>
+                <Td>{transaction.sgstIdper}</Td>
+                <Td></Td>
               </Tr>
             ))}
           </Tbody>
@@ -279,8 +287,8 @@ const RecentTransactions = () => {
               <Td>{totalAmount.toFixed(2)}</Td>
               <Td>{paymentMethodTotals.online.toFixed(2)}</Td>
               <Td>{paymentMethodTotals.cash.toFixed(2)}</Td>
-              <Td>{cgstTotal.toFixed(2)}</Td>
-              <Td>{sgstTotal.toFixed(2)}</Td>
+              <Td>{cgstTotal}</Td>
+              <Td>{sgstTotal}</Td>
             </Tr>
           </Tbody>
         </Table>

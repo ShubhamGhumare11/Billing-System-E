@@ -14,7 +14,7 @@ const SalesDashboard = () => (
       <RecentTransactions />
     </Grid>
     <Box mt={6}> {/* Add a Box around TopSellingItems for spacing */}
-      <TopSellingItems /> Include the TopSellingItems component
+      {/* <TopSellingItems /> Include the TopSellingItems component */}
     </Box>
   </Box>
 );

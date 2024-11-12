@@ -77,9 +77,106 @@
 
 
 
+// import React from 'react';
+// import { Box, Flex, Spacer, HStack, Button, IconButton, Avatar, useDisclosure, useBreakpointValue } from '@chakra-ui/react';
+// import { HamburgerIcon } from '@chakra-ui/icons';
+// import { Link } from 'react-router-dom'; // For navigation (you can modify this as needed)
+
+// const Navbar = () => {
+//   const { isOpen, onToggle } = useDisclosure();
+//   const display = useBreakpointValue({ base: 'none', md: 'flex' });
+
+//   return (
+//     <Box as="nav" w="100%" p={4} boxShadow="md" bg="teal.500">
+//       <Flex align="center" justify="space-between">
+//         {/* Logo or Title */}
+//         <Box>
+//           <Link to="/home"> {/* Logo or Title Link */}
+//             <Button colorScheme="white" variant="link" fontSize="xl" fontWeight="bold">
+             
+//             </Button>
+//           </Link>
+//         </Box>
+
+//         {/* Nav Links (Visible on medium screens and larger) */}
+//         <HStack spacing={4} display={display}>
+
+        
+//           {/* <Link to="/home">
+//             <Button variant="link" color="white" fontWeight="bold">
+//               Home
+//             </Button>
+//           </Link>
+//           <Link to="/about">
+//             <Button variant="link" color="white" fontWeight="bold">
+//               About
+//             </Button>
+//           </Link>
+//           <Link to="/services">
+//             <Button variant="link" color="white" fontWeight="bold">
+//               Services
+//             </Button>
+//           </Link>
+//           <Link to="/contact">
+//             <Button variant="link" color="white" fontWeight="bold">
+//               Contact
+//             </Button>
+//           </Link> */}
+//         </HStack>
+
+//         {/* Avatar and Hamburger Menu for Mobile */}
+//         <Flex align="center">
+//           <Avatar name="User Name" src="https://bit.ly/broken-link" size="sm" />
+//           <IconButton
+//             aria-label="Open menu"
+//             icon={<HamburgerIcon />}
+//             display={{ base: 'block', md: 'none' }}
+//             onClick={onToggle}
+//             ml={4}
+//             variant="outline"
+//             color="white"
+//           />
+//         </Flex>
+//       </Flex>
+
+//       {/* Hamburger Menu for Mobile */}
+//       {isOpen && (
+//         <Box display={{ base: 'block', md: 'none' }} p={4}>
+
+//         <Text>GA_BillingSYSTEM</Text>
+//           {/* <Link to="/home">
+//             <Button variant="link" color="teal.600" width="full">
+//               Home
+//             </Button>
+//           </Link>
+//           <Link to="/about">
+//             <Button variant="link" color="teal.600" width="full">
+//               About
+//             </Button>
+//           </Link>
+//           <Link to="/services">
+//             <Button variant="link" color="teal.600" width="full">
+//               Services
+//             </Button>
+//           </Link>
+//           <Link to="/contact">
+//             <Button variant="link" color="teal.600" width="full">
+//               Contact
+//             </Button>
+//           </Link> */}
+//         </Box>
+//       )}
+//     </Box>
+//   );
+// };
+
+// export default Navbar;
+
+
+
 import React from 'react';
-import { Box, Flex, Spacer, HStack, Button, IconButton, Avatar, useDisclosure, useBreakpointValue } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { Box, Flex, Spacer, HStack, Button, IconButton, Avatar, useDisclosure, useBreakpointValue, Text } from '@chakra-ui/react';
+import { HamburgerIcon, HomeIcon, InfoIcon, ServicesIcon, ContactIcon } from '@chakra-ui/icons';  // Import icons
 import { Link } from 'react-router-dom'; // For navigation (you can modify this as needed)
 
 const Navbar = () => {
@@ -93,35 +190,33 @@ const Navbar = () => {
         <Box>
           <Link to="/home"> {/* Logo or Title Link */}
             <Button colorScheme="white" variant="link" fontSize="xl" fontWeight="bold">
-             
+              GA_BillingSYSTEM
             </Button>
           </Link>
         </Box>
 
         {/* Nav Links (Visible on medium screens and larger) */}
         <HStack spacing={4} display={display}>
-
-        
-          {/* <Link to="/home">
-            <Button variant="link" color="white" fontWeight="bold">
+          <Link to="/home">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<HomeIcon />}>
               Home
             </Button>
           </Link>
           <Link to="/about">
-            <Button variant="link" color="white" fontWeight="bold">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<InfoIcon />}>
               About
             </Button>
           </Link>
           <Link to="/services">
-            <Button variant="link" color="white" fontWeight="bold">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<ServicesIcon />}>
               Services
             </Button>
           </Link>
           <Link to="/contact">
-            <Button variant="link" color="white" fontWeight="bold">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<ContactIcon />}>
               Contact
             </Button>
-          </Link> */}
+          </Link>
         </HStack>
 
         {/* Avatar and Hamburger Menu for Mobile */}
@@ -142,28 +237,27 @@ const Navbar = () => {
       {/* Hamburger Menu for Mobile */}
       {isOpen && (
         <Box display={{ base: 'block', md: 'none' }} p={4}>
-
-        <Text>GA_BillingSYSTEM</Text>
-          {/* <Link to="/home">
-            <Button variant="link" color="teal.600" width="full">
+          <Text>GA_BillingSYSTEM</Text>
+          <Link to="/home">
+            <Button variant="link" color="teal.600" width="full" leftIcon={<HomeIcon />}>
               Home
             </Button>
           </Link>
           <Link to="/about">
-            <Button variant="link" color="teal.600" width="full">
+            <Button variant="link" color="teal.600" width="full" leftIcon={<InfoIcon />}>
               About
             </Button>
           </Link>
           <Link to="/services">
-            <Button variant="link" color="teal.600" width="full">
+            <Button variant="link" color="teal.600" width="full" leftIcon={<ServicesIcon />}>
               Services
             </Button>
           </Link>
           <Link to="/contact">
-            <Button variant="link" color="teal.600" width="full">
+            <Button variant="link" color="teal.600" width="full" leftIcon={<ContactIcon />}>
               Contact
             </Button>
-          </Link> */}
+          </Link>
         </Box>
       )}
     </Box>

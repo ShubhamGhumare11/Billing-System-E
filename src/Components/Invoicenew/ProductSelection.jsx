@@ -118,6 +118,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  FormControl, FormLabel,
   Tooltip,
   Text,
   Checkbox,
@@ -126,13 +127,15 @@ import {
 import { HiTrash } from "react-icons/hi";
 import SearchComponent from "./SearchProductsInInvoice";
 
-const ProductSelection = ({ onProductSelect, onGstToggle }) => {
+const ProductSelection = ({ onProductSelect, onGstToggle ,onPaymentMethodChange,onTaxChange  }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [isGstEnabled, setIsGstEnabled] = useState(false);
   const [gstEnabled, setGstEnabled] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('Online'); // Default payment method
+  const [paymentMethod, setPaymentMethod] = useState(''); // Default payment method
 
+  const [sgst, setSgst] = useState();
+  const [cgst, setCgst] = useState();
 
   const handleProductSelect = (product) => {
     const productWithQuantity = { ...product, quantity };
@@ -176,12 +179,7 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
     onProductSelect(updatedProducts);
   };
 
-  // const handleDiscountChange = (index, discount) => {
-  //     const newProducts = [...products];
-  //     newProducts[index].discount = parseFloat(discount);
-  //     setSelectedProducts(newProducts);
-  //     onProductSelect(newProducts);
-  // };
+
 
   const handleDiscountChange = (productID, newDiscount) => {
     const updatedProducts = selectedProducts.map((p) =>
@@ -248,20 +246,57 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
 
 
 
-  const handlePaymentMethodChange = (event) => {
-    const method = event.target.value;
-    setPaymentMethod(method);
 
-    if (selectedProduct) {
-      // Update selected product with the new payment method
-      const updatedProduct = { ...selectedProduct, paymentMethod: method };
-      setSelectedProducts(updatedProduct);
-      onProductSelect(updatedProduct);
-    }
-  };
+
+// // Inside ProductSelection.jsx
+// const handlePaymentMethodChange = (e) => {
+//   const selectedMethod = e.target.value; // Get the selected value
+
+//   setPaymentMethod(selectedMethod)
+//   onPaymentMethodChange(selectedMethod); // Call the callback with the new method
+// };
 
 
 
+
+
+
+// const handlePaymentMethodChange = (method) => {
+//   setPaymentMethod(method);  // Update the payment method
+
+//   // Update all selected products with the same payment method
+//   setSelectedProducts(prevProducts =>
+//     prevProducts.map(product => ({
+//       ...product,
+//       paymentMethod: method,  // Add paymentMethod to each product
+//     }))
+//   );
+
+//   // setSelectedProducts(updatedProducts);
+//   // onProductSelect(updatedProducts);
+
+//   console.log("Updated products with payment method:", selectedProducts);  // Debugging log
+// };
+
+
+
+
+
+const handlePaymentMethodSelect = (event) => {
+  const selectedMethod = event.target.value;
+  onPaymentMethodChange(selectedMethod); // Send selected method to parent
+};
+
+
+const handleSgstChange = (e) => {
+  setSgst(parseFloat(e.target.value));
+  onTaxChange('sgst', parseFloat(e.target.value)); // Pass SGST to parent
+};
+
+const handleCgstChange = (e) => {
+  setCgst(parseFloat(e.target.value));
+  onTaxChange('cgst', parseFloat(e.target.value)); // Pass CGST to parent
+};
 
 
 
@@ -270,40 +305,134 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
   return (
     <Box p={4} border="1px solid gray" borderRadius="md">
       <VStack spacing={3} align="stretch">
+        <Flex
+          wrap="wrap"
+          align="center"
+          justify="space-between"
+          direction={{ base: "column", md: "row" }}
+          gap={4}
+        >
+          <Box flex="1" maxW={{ base: "100%", md: "500px" }} w="full">
+            <SearchComponent onProductSelect={handleProductSelect} />
+          </Box>
+        </Flex>
 
+        {/* <HStack
+          direction={{ base: "column", md: "row" }} // Stack vertically on smaller screens, horizontally on larger screens
+          spacing={{ base: 4, md: 6 }} // Adjust spacing for small and large screens
+          align="flex-start" // Align items to the start for consistency
+          width="100%" // Ensure full width
+          justify="flex-start"
+        > */}
+          {/* <Checkbox
+    isChecked={gstEnabled}
+    onChange={handleGstToggle}
+    colorScheme="green"
+    width={{ base: '100%', md: 'auto' }} // Full width on mobile, auto on larger screens
+  >
+    Apply GST
+  </Checkbox> */}
 
-      <Flex
-        wrap="wrap"
-        align="center"
-        justify="space-between"
-        direction={{ base: 'column', md: 'row' }}
-        gap={4}
-      >
-        <Box flex="1" maxW={{ base: '100%', md: '500px' }} w="full">
-        <SearchComponent onProductSelect={handleProductSelect} />
-        </Box>
-     
-      </Flex>
+          {/* <FormControl width={{ base: "100%", md: "auto" }} mb={4}>
+            <FormLabel fontSize={{ base: "sm", md: "md" }}>SGST</FormLabel>
+            <NumberInput
+              value={sgst}
+              onChange={(valueString) =>
+                handleSgstChange({ target: { value: valueString } })
+              }
+              width="100%" // Ensures the input takes full width in its container
+            >
+              <NumberInputField placeholder="Enter SGST" />
+            </NumberInput>
 
-
-        <HStack justify="flex-start">
-          <Checkbox
-            isChecked={gstEnabled}
-            onChange={handleGstToggle}
-            colorScheme="green"
-          >
-            Apply GST
-          </Checkbox>
+            <FormLabel fontSize={{ base: "sm", md: "md" }}>CGST</FormLabel>
+            <NumberInput
+              value={cgst}
+              onChange={(valueString) =>
+                handleCgstChange({ target: { value: valueString } })
+              }
+              width={{ base: "100%", md: "auto" }} // Full width on mobile, auto on larger screens
+            >
+              <NumberInputField placeholder="Enter CGST" />
+            </NumberInput>
+          </FormControl>
 
           <Select
-        placeholder="Select Payment Method"
-        value={paymentMethod}
-        onChange={handlePaymentMethodChange}
-      >
-        <option value="Online">Online</option>
-        <option value="Cash">Cash</option>
-      </Select>
-        </HStack>
+            placeholder="Select Payment Method"
+            onChange={handlePaymentMethodSelect}
+            width={{ base: "100%", md: "auto" }} // Full width on mobile, auto on larger screens
+          >
+            <option value="Online">Online</option>
+            <option value="Cash">Cash</option>
+          </Select>
+        </HStack> */}
+
+
+
+
+
+
+        <HStack
+      direction={{ base: "column", md: "row" }}
+      spacing={{ base: 4, md: 6 }}
+      align="flex-start"
+      width="100%"
+      wrap="wrap"
+      justify="flex-start"
+    >
+      {/* SGST Field */}
+      <FormControl width={{ base: "100%", md: "auto" }} mb={{ base: 4, md: 0 }}>
+        <FormLabel fontSize={{ base: "sm", md: "md" }}>SGST</FormLabel>
+        <NumberInput
+          value={sgst}
+          onChange={(valueString) => handleSgstChange({ target: { value: valueString } })}
+          width="100%"
+          precision={2} // Allows 2 decimal places
+          step={0.5} // Sets the increment for each step
+          min={0}
+        >
+          <NumberInputField placeholder="Enter SGST" />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </FormControl>
+
+      {/* CGST Field */}
+      <FormControl width={{ base: "100%", md: "auto" }} mb={{ base: 4, md: 0 }}>
+        <FormLabel fontSize={{ base: "sm", md: "md" }}>CGST</FormLabel>
+        <NumberInput
+          value={cgst}
+          onChange={(valueString) => handleCgstChange({ target: { value: valueString } })}
+          width="100%"
+          precision={2} // Allows 2 decimal places
+          step={0.5} // Sets the increment for each step
+          min={0}
+        >
+          <NumberInputField placeholder="Enter CGST" />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </FormControl>
+
+      {/* Payment Method Select */}
+      <FormControl width={{ base: "100%", md: "auto" }} mb={{ base: 4, md: 0 }}>
+        <FormLabel fontSize={{ base: "sm", md: "md" }}>Payment Method</FormLabel>
+        <Select
+          placeholder="Select Payment Method"
+          onChange={handlePaymentMethodSelect}
+          width="100%"
+        >
+          <option value="Online">Online</option>
+          <option value="Cash">Cash</option>
+        </Select>
+      </FormControl>
+    </HStack>
+
+
 
         {/* Display selected products in a table */}
         <Table variant="simple" mt={4}>
@@ -332,20 +461,22 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
                 <Td>{product.productName} </Td>
                 {/* <Td>{product.actualPrice} </Td> */}
 
+                <Td>
+                  {" "}
+                  <Input
+                    type="number"
+                    min={0}
+                    value={product.sellingPrice}
+                    onChange={(e) =>
+                      handleSellingPriceChange(
+                        product.productID,
+                        parseInt(e.target.value) || 0
+                      )
+                    }
+                    w="100px"
+                  />
+                </Td>
 
-<Td>             <Input
-  type="number"
-  min={0}
-  value={product.sellingPrice}
-  onChange={(e) =>
-    handleSellingPriceChange(
-      product.productID,
-      parseInt(e.target.value) || 0
-    )
-  }
-  w="100px"
-/></Td>
-   
                 {/* <Td>
                 <NumberInput
                     min={0}
@@ -398,16 +529,19 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
                 <Td>{getStockTag(product.stockQuantities)}</Td>
 
                 <Td>
-                <NumberInput
-                                        min={1}
-                                        max={product.stockQuantities || 1}
-                                        value={product.quantity}
-                                        onChange={(valueString) => 
-                                            handleQuantityChange(product.productID, parseInt(valueString) || 1)
-                                        }
-                                        w="100px"
-                                        isInvalid={product.quantity > product.stockQuantities} 
-                                    >
+                  <NumberInput
+                    min={1}
+                    max={product.stockQuantities || 1}
+                    value={product.quantity}
+                    onChange={(valueString) =>
+                      handleQuantityChange(
+                        product.productID,
+                        parseInt(valueString) || 1
+                      )
+                    }
+                    w="100px"
+                    isInvalid={product.quantity > product.stockQuantities}
+                  >
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
@@ -419,12 +553,11 @@ const ProductSelection = ({ onProductSelect, onGstToggle }) => {
                 {gstEnabled && (
                   <Td>
                     <NumberInput
-                    
                       value={product.gst || 0}
                       onChange={(valueString) =>
                         handleGstChange(
                           product.productID,
-                          parseInt(valueString) ||0
+                          parseInt(valueString) || 0
                         )
                       }
                       w="80px"

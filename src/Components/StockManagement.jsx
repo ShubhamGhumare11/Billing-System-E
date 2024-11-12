@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -25,16 +24,14 @@ import {
   ModalBody,
   ModalFooter,
   Flex,
-  IconButton ,
+  IconButton,
   Tooltip,
-  Tag,
+  Tag,Text,
 } from "@chakra-ui/react";
 import axios from "axios";
 import SearchComponent from "./SearchComponent";
-import { FaPlus,FaList } from "react-icons/fa";
+import { FaPlus, FaList } from "react-icons/fa";
 import { HiSave, HiPencilAlt, HiTrash } from "react-icons/hi";
-
-
 
 const StockManagement = () => {
   const [products, setProducts] = useState([]);
@@ -47,7 +44,7 @@ const StockManagement = () => {
   const [newProduct, setNewProduct] = useState({
     productName: "",
     description: "",
-  
+
     actualPrice: "0000",
     sellingPrice: "",
     discount: "0",
@@ -55,15 +52,17 @@ const StockManagement = () => {
     clothingType: "",
   });
 
-
-// pagination Logic
-const [currentPage, setCurrentPage] = useState(1);
+  // pagination Logic
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7; // Adjust this value to set items per page
 
   // Calculate slice for current page
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
   // Fetch all products from API
@@ -84,10 +83,6 @@ const [currentPage, setCurrentPage] = useState(1);
       console.error("Error fetching products:", error);
     }
   };
-
-
-
-
 
   // Fetch products from API
   useEffect(() => {
@@ -112,12 +107,6 @@ const [currentPage, setCurrentPage] = useState(1);
 
     fetchProducts();
   }, []);
-
-
-
-
-
-
 
   // Delete a product using API
   const handleDeleteProduct = async (productID) => {
@@ -181,7 +170,7 @@ const [currentPage, setCurrentPage] = useState(1);
 
   // Add a new product using API
   const handleAddProduct = async () => {
-    try {   
+    try {
       console.log(newProduct);
       const response = await axios.post(
         "http://localhost:8080/products/saveInformation",
@@ -202,7 +191,7 @@ const [currentPage, setCurrentPage] = useState(1);
         stockQuantities: [],
         clothingType: "",
       });
-     
+
       handleGetAllProducts(); // Refresh product list
       setIsModalOpen(false);
       setIsFormVisible(false);
@@ -211,286 +200,303 @@ const [currentPage, setCurrentPage] = useState(1);
     }
   };
 
-// Helper function for stock status tag color and responsive size
-const getStockTag = (stockQuantities) => {
-  const responsiveSize = {
-    // fontSize: ["sm", "sm", "sm"], // Responsive font sizes
-    // padding: ["0.2rem", "0.3rem", "0.5rem"], // Responsive padding
+  // Helper function for stock status tag color and responsive size
+  const getStockTag = (stockQuantities) => {
+    const responsiveSize = {
+      // fontSize: ["sm", "sm", "sm"], // Responsive font sizes
+      // padding: ["0.2rem", "0.3rem", "0.5rem"], // Responsive padding
 
-    fontSize: ["xs", "sm","sm",],         // Small font sizes for responsiveness
-    paddingX: ["0.2rem", "0.4rem", "0.4rem"], // Horizontal padding for compact styling
-    paddingY: ["0.1rem", "0.2rem", "0.2rem"], // Vertical padding for compact styling
-    whiteSpace: "nowrap",   
+      fontSize: ["xs", "sm", "xs"], // Small font sizes for responsiveness
+      paddingX: ["0.2rem", "0.4rem", "0.9rem"], // Horizontal padding for compact styling
+      paddingY: ["0.1rem", "0.2rem", "0.2rem"], // Vertical padding for compact styling
+      whiteSpace: "nowrap",
+    };
+
+    if (stockQuantities <= 0) {
+      return (
+        <Tag colorScheme="red" {...responsiveSize}>
+          Out of Stock
+        </Tag>
+      );
+    }
+    if (stockQuantities < 50) {
+      return (
+        <Tag colorScheme="yellow" {...responsiveSize}>
+          Low Stock
+        </Tag>
+      );
+    }
+    return (
+      <Tag colorScheme="green" {...responsiveSize}>
+        In Stock
+      </Tag>
+    );
   };
-
-  if (stockQuantities <= 0) {
-    return <Tag colorScheme="red" {...responsiveSize}>Out of Stock</Tag>;
-  }
-  if (stockQuantities < 10) {
-    return <Tag colorScheme="yellow" {...responsiveSize}>Low Stock</Tag>;
-  }
-  return <Tag colorScheme="green" {...responsiveSize}>In Stock</Tag>;
-};
-
 
   return (
     <VStack spacing={4} mt={4} w="full" align="stretch">
-   <Heading
-    as="h2"
-    size="xl" // Make it larger than "lg"
-    textAlign="center"
-    fontWeight="extrabold"
-    color="teal.600" // Use a color that stands out
-    background="gray.100" // Light background to highlight
-    p={2} // Padding for the background effect
-    borderRadius="md" // Round the corners slightly
-    textTransform="uppercase" // Make text uppercase for formality
-    letterSpacing="widest" // Add letter spacing
-    boxShadow="md" // Subtle shadow for a pop effect
->
-    Stock Management
-</Heading>
-
-   
-
-
-
-
-
-
-
-
-  {/* geAll productLIst */}
-         {isProductListVisible && (
-
-          <Flex direction="column" height="100%">
-          <Box flex="1" overflowY="auto"> 
-         <Table variant="simple" mt={4}>
-           <Thead>
-             <Tr>
-               {/* <Th>Product ID</Th> */}
-               <Th>Product Name</Th>
-               <Th>Product Type</Th>
-               <Th>Description</Th>
-               <Th>Selling Price</Th>
-               <Th> In Stock </Th>
-               <Th> In Stock </Th>
-
-               
-               <Th>Actions</Th>
-             </Tr>
-           </Thead>
-           <Tbody>
-             {currentProducts.map((product) => (
-               <Tr
-                 key={product.productID}
-                onClick={() => handleEditProduct(product.productID)}
-                _hover={{ backgroundColor: "gray.100" }}
-               >
-                 {/* <Td>{product.productID}</Td> */}
-
-                 <Td>
-                   {editableProductID === product.productID ? (
-                     <Input
-                       value={product.productName}
-                       onChange={(e) =>
-                         handleProductChange(
-                           product.productID,
-                           "productName",
-                           e.target.value
-                         )
-                       }
-                     />
-                   ) : (
-                     product.productName
-                   )}
-                 </Td>
-
-              
-
-                 <Td>
-                   {editableProductID === product.productID ? (
-                     <VStack spacing={4}>
-                       <Checkbox
-                         isChecked={product.clothingType === "READYMADE"}
-                         onChange={(e) =>
-                           handleProductChange(
-                             product.productID,
-                             "clothingType",
-                             e.target.checked
-                               ? "READYMADE"
-                               : product.clothingType === "UNSTITCHED"
-                               ? ""
-                               : product.clothingType
-                           )
-                         }
-                       >
-                         READYMADE
-                       </Checkbox>
-
-                       <Checkbox
-                         isChecked={product.clothingType === "UNSTITCHED"}
-                         onChange={(e) =>
-                           handleProductChange(
-                             product.productID,
-                             "clothingType",
-                             e.target.checked
-                               ? "UNSTITCHED"
-                               : product.clothingType === "READYMADE"
-                              ? ""
-                               : product.clothingType
-                           )
-                         }
-                       >
-                         UNSTITCHED
-                       </Checkbox>
-                     </VStack>
-                   ) : (
-                     product.clothingType
-                   )}
-                 </Td>
-
-                 <Td>
-                   {editableProductID === product.productID ? (
-                     <Input
-                       value={product.description}
-                       onChange={(e) =>
-                         handleProductChange(
-                           product.productID,
-                           "description",
-                           e.target.value
-                         )
-                       }
-                     />
-                   ) : (
-                     product.description
-                   )}
-                 </Td>
-
-                 <Td>
-                   {editableProductID === product.productID ? (
-                     <Input
-                       type="number"
-                       value={product.sellingPrice}
-                       onChange={(e) =>
-                         handleProductChange(
-                           product.productID,
-                           "sellingPrice",
-                           parseFloat(e.target.value)
-                         )
-                       }
-                     />
-                   ) : (
-                     product.sellingPrice
-                   )}
-                </Td>
-
-                 <Td>
-                   {editableProductID === product.productID ? (
-                     <Input
-                       value={product.stockQuantities}
-                       onChange={(e) =>
-                         handleProductChange(
-                           product.productID,
-                           "stockQuantities",
-                           e.target.value
-                         )
-                       }
-                       placeholder="Enter quantities separated by commas"
-                     />
-                   ) : (
-                     product.stockQuantities
-                   )}
-                 </Td>
-
-                 <Td>{getStockTag(product.stockQuantities)}</Td>
-                
-
-
-                 <Td>
-  <HStack spacing={4}>
-    <Tooltip label="Save changes" aria-label="Save Tooltip">
-      <IconButton
-        aria-label="Save"
-        icon={<HiSave />}
-        colorScheme="green"
-        onClick={() => handleSaveEdit(product.productID)}
-      />
-    </Tooltip>
-
-    <Tooltip label="Edit product" aria-label="Edit Tooltip">
-      <IconButton
-        aria-label="Edit"
-        icon={<HiPencilAlt />}
-        colorScheme="yellow"
-        onClick={() => handleEditProduct(product.productID)}
-      />
-    </Tooltip>
-
-    <Tooltip label="Delete product" aria-label="Delete Tooltip">
-      <IconButton
-        aria-label="Delete"
-        icon={<HiTrash />}
-        colorScheme="red"
-        onClick={() => handleDeleteProduct(product.productID)}
-      />
-    </Tooltip>
-  </HStack>
-</Td>
-
-                 
-               </Tr>
-             ))}
-           </Tbody>
-        </Table>
-        </Box>
-         {/* Pagination Controls */}
-  <Flex
-        mt="auto"
-        bottom="0"
-        width="100%"
-        justify="center"
-        py={4}
-        bg="white"
-        boxShadow="md"
+      <Heading
+        as="h2"
+        size="lg" // Make it larger than "lg"
+        textAlign="center"
+        fontWeight="extrabold"
+        color="teal.600" // Use a color that stands out
+        background="gray.100" // Light background to highlight
+        p={2} // Padding for the background effect
+        borderRadius="md" // Round the corners slightly
+        textTransform="uppercase" // Make text uppercase for formality
+        letterSpacing="widest" // Add letter spacing
+        boxShadow="sm" // Subtle shadow for a pop effect
       >
-  <HStack spacing={4} mt={4}>
-        <Button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          isDisabled={currentPage === 1}
-        >
-          Prev
-        </Button>
+        Stock Management
+      </Heading>
 
-        {/* Page Numbers */}
-        {Array.from({ length: totalPages }, (_, index) => (
-          <Button
-            key={index + 1}
-            onClick={() => setCurrentPage(index + 1)}
-            isActive={currentPage === index + 1}
+      {/* geAll productLIst */}
+      {isProductListVisible && (
+        <Flex direction="column" height="100%">
+          {loading ? (
+            <Flex justifyContent="center" alignItems="center" height="60vh">
+              <Spinner size="xl" label="Loading products..." />
+            </Flex>
+          ) : (
+            <Box flex="1" overflowY="auto">
+              <Table variant="striped" colorScheme="gray" size="xs" mt={4}>
+                <Thead bg="teal.200">
+                  <Tr   >
+                    {/* <Th>Product ID</Th> */}
+                    <Th p="2" fontSize="sm">Product Name</Th>
+                    <Th p="2" fontSize="sm">Product Type</Th>
+                    <Th p="2" fontSize="sm">Description</Th>
+                    <Th p="2" fontSize="sm">Selling Price</Th>
+                    <Th p="2" fontSize="sm"> In Stock </Th>
+                    <Th p="2" fontSize="sm"> Status </Th>
+                    <Th p="2" fontSize="sm">Actions</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {currentProducts.map((product) => (
+                    <Tr
+                      key={product.productID}
+                      onClick={() => handleEditProduct(product.productID)}
+                      _hover={{ backgroundColor: "gray.100" }}
+                    >
+                      {/* <Td>{product.productID}</Td> */}
+
+                      <Td  p="2" fontSize="xs">
+                        {editableProductID === product.productID ? (
+                          <Input
+                           size="xs"
+                            value={product.productName}
+                            onChange={(e) =>
+                              handleProductChange(
+                                product.productID,
+                                "productName",
+                                e.target.value
+                              )
+                            }
+                          />
+                        ) : (
+                          product.productName
+                        )}
+                      </Td>
+
+                      <Td  p="2" fontSize="xs">
+                        {editableProductID === product.productID ? (
+                          <VStack spacing={4}>
+                            <Checkbox
+                              isChecked={product.clothingType === "READYMADE"}
+                              size="sm"
+                              onChange={(e) =>
+                                handleProductChange(
+                                  product.productID,
+                                  "clothingType",
+                                  e.target.checked
+                                    ? "READYMADE"
+                                    : product.clothingType === "UNSTITCHED"
+                                    ? ""
+                                    : product.clothingType
+                                )
+                              }
+                            >
+                              READYMADE
+                            </Checkbox>
+
+                            <Checkbox
+                              isChecked={product.clothingType === "UNSTITCHED"}
+                              size="sm"
+                              onChange={(e) =>
+                                handleProductChange(
+                                  product.productID,
+                                  "clothingType",
+                                  e.target.checked
+                                    ? "UNSTITCHED"
+                                    : product.clothingType === "READYMADE"
+                                    ? ""
+                                    : product.clothingType
+                                )
+                              }
+                            >
+                              UNSTITCHED
+                            </Checkbox>
+                          </VStack>
+                        ) : (
+                          <Text fontSize="xs">{product.clothingType}</Text>
+                        )}
+                      </Td>
+
+                      <Td  p="2" fontSize="xs">
+                        {editableProductID === product.productID ? (
+                          <Input
+                            size="xs"
+                            value={product.description}
+                            onChange={(e) =>
+                              handleProductChange(
+                                product.productID,
+                                "description",
+                                e.target.value
+                              )
+                            }
+                          />
+                        ) : (
+                          <Text fontSize="xs">{ product.description}</Text>
+                         
+                        )}
+                      </Td>
+
+                      <Td  p="2" fontSize="xs">
+                        {editableProductID === product.productID ? (
+                          <Input  size="xs"
+                            type="number"
+                            value={product.sellingPrice}
+                            onChange={(e) =>
+                              handleProductChange(
+                                product.productID,
+                                "sellingPrice",
+                                parseFloat(e.target.value)
+                              )
+                            }
+                          />
+                        ) : (
+                          <Text fontSize="xs">{  product.sellingPrice}</Text>
+                        
+                        )}
+                      </Td>
+
+                      <Td  p="2" fontSize="xs">
+                        {editableProductID === product.productID ? (
+                          <Input  size="xs"
+                            value={product.stockQuantities}
+                            onChange={(e) =>
+                              handleProductChange(
+                                product.productID,
+                                "stockQuantities",
+                                e.target.value
+                              )
+                            }
+                            placeholder="Enter quantities separated by commas"
+                          />
+                        ) : (
+                          product.stockQuantities
+                        )}
+                      </Td>
+
+                      <Td  p="2" fontSize="xs">{getStockTag(product.stockQuantities)}</Td>
+
+                      <Td  p="2" fontSize="xs">
+                        <HStack spacing={2}>
+                          <Tooltip
+                            label="Save changes"
+                            aria-label="Save Tooltip"
+                          >
+                            <IconButton
+                              aria-label="Save"
+                              icon={<HiSave />}
+                                size="xs"
+                              colorScheme="green"
+                              onClick={() => handleSaveEdit(product.productID)}
+                            />
+                          </Tooltip>
+
+                          <Tooltip
+                            label="Edit product"
+                            aria-label="Edit Tooltip"
+                          >
+                            <IconButton
+                              aria-label="Edit"
+                                size="xs"
+                              icon={<HiPencilAlt />}
+                              colorScheme="yellow"
+                              onClick={() =>
+                                handleEditProduct(product.productID)
+                              }
+                            />
+                          </Tooltip>
+
+                          <Tooltip
+                            label="Delete product"
+                            aria-label="Delete Tooltip"
+                          >
+                            <IconButton
+                              aria-label="Delete"
+                                size="xs"
+                              icon={<HiTrash />}
+                              colorScheme="red"
+                              onClick={() =>
+                                handleDeleteProduct(product.productID)
+                              }
+                            />
+                          </Tooltip>
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </Box>
+          )}
+          {/* Pagination Controls */}
+          <Flex
+            mt="auto"
+            bottom="0"
+            width="100%"
+            justify="center"
+            py={4}
+            bg="white"
+            boxShadow="md"
           >
-            {index + 1}
-          </Button>
-        ))}
+            <HStack spacing={4} mt={4}>
+              <Button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                isDisabled={currentPage === 1}
+                  size="sm"
+              >
+                Prev
+              </Button>
 
-        <Button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          isDisabled={currentPage === totalPages}
-        >
-          Next
-        </Button>
-      </HStack>
-      </Flex> 
-      </Flex>
-       )}
+              {/* Page Numbers */}
+              {Array.from({ length: totalPages }, (_, index) => (
+                <Button
+                  key={index + 1}
+                  onClick={() => setCurrentPage(index + 1)}
+                  isActive={currentPage === index + 1}
+                    size="sm"
+                >
+                  {index + 1}
+                </Button>
+              ))}
 
-
- 
+              <Button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                isDisabled={currentPage === totalPages}
+                  size="sm"
+              >
+                Next
+              </Button>
+            </HStack>
+          </Flex>
+        </Flex>
+      )}
     </VStack>
-
-
-
-
   );
 };
 

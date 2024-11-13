@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Sidebar from './Components/Sidebar';
+// import Sidebar from './Components/Sidebar';
 import Navbar from './Components/Navbar';
 
 import ProductManagement from './Components/ProductManagement';
@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <Box display="flex" height="100vh">
-        <Sidebar /> {/* This renders the sidebar */}
+        {/* <Sidebar /> This renders the sidebar */}
         <Box flex="1" p={4} ml={{ base: '0', md: '0' }}>
         <Navbar/>
           <Routes>

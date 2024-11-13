@@ -262,16 +262,25 @@ console.log("Total Amount (with SGST, CGST):", totalAmount);
 
 
  
-    // Constructing the URL with multiple instances of productNames and sellQuantity parameters
-    const productParams = selectedProducts
-      .map(
-        (product, index) =>
-          `productNames=${encodeURIComponent(
-            product.productName
-          )}&sellQuantity=${product.quantity || 1}`
-      )
-      .join("&");
+    // // Constructing the URL with multiple instances of productNames and sellQuantity parameters
+    // const productParams = selectedProducts
+    //   .map(
+    //     (product, index) =>
+    //       `productNames=${encodeURIComponent(
+    //         product.productName
+    //       )}&sellQuantity=${product.quantity || 1}`
+    //   )
+    //   .join("&");
   
+// Constructing the URL with multiple instances of productNames, sellQuantity, and sellingPrice parameters
+const productParams = selectedProducts
+  .map(
+    (product) =>
+      `productNames=${encodeURIComponent(product.productName)}&sellQuantity=${
+        product.quantity || 1
+      }&sellingPrice=${product.sellingPrice || 0}`
+  )
+  .join("&");
 
     console.log(
       "Invoice data is post to backend api..." + JSON.stringify(invoiceData)

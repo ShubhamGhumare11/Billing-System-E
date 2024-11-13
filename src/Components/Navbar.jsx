@@ -174,92 +174,190 @@
 
 
 
+
+
+// import React from 'react';
+// import { Box, Flex, HStack, Button, IconButton, Avatar, useDisclosure, useBreakpointValue, Text } from '@chakra-ui/react';
+// import { HamburgerIcon } from '@chakra-ui/icons';
+// import { MdHome, MdInfo, MdPhone } from 'react-icons/md'; // Use MdHome from react-icons/md
+// import { Link } from 'react-router-dom'; // For navigation
+
+// const Navbar = () => {
+//   const { isOpen, onToggle } = useDisclosure();
+//   const display = useBreakpointValue({ base: 'none', md: 'flex' });
+
+//   return (
+//     <Box as="nav" w="100%" p={4} boxShadow="md" bg="teal.500">
+//       <Flex align="center" justify="space-between">
+//         {/* Logo or Title */}
+//         <Box>
+//           <Link to="/home"> {/* Logo or Title Link */}
+//             <Button colorScheme="white" variant="link" fontSize="xl" fontWeight="bold">
+//               GA_BillingSYSTEM
+//             </Button>
+//           </Link>
+//         </Box>
+
+//         {/* Nav Links (Visible on medium screens and larger) */}
+//         <HStack spacing={4} display={display}>
+//           <Link to="/home">
+//             <Button variant="link" color="white" fontWeight="bold" leftIcon={<MdHome />}>
+//               Home
+//             </Button>
+//           </Link>
+//           <Link to="/about">
+//             <Button variant="link" color="white" fontWeight="bold" leftIcon={<MdInfo />}>
+//               About
+//             </Button>
+//           </Link>
+//           <Link to="/services">
+//             <Button variant="link" color="white" fontWeight="bold" leftIcon={<MdInfo />}>
+//               Services
+//             </Button>
+//           </Link>
+//           <Link to="/contact">
+//             <Button variant="link" color="white" fontWeight="bold" leftIcon={<MdPhone />}>
+//               Contact
+//             </Button>
+//           </Link>
+//         </HStack>
+
+//         {/* Avatar and Hamburger Menu for Mobile */}
+//         <Flex align="center">
+//           <Avatar name="User Name" src="https://bit.ly/broken-link" size="sm" />
+//           <IconButton
+//             aria-label="Open menu"
+//             icon={<HamburgerIcon />}
+//             display={{ base: 'block', md: 'none' }}
+//             onClick={onToggle}
+//             ml={4}
+//             variant="outline"
+//             color="white"
+//           />
+//         </Flex>
+//       </Flex>
+
+//       {/* Hamburger Menu for Mobile */}
+//       {isOpen && (
+//         <Box display={{ base: 'block', md: 'none' }} p={4}>
+//           <Text>GA_BillingSYSTEM</Text>
+//           <Link to="/home">
+//             <Button variant="link" color="teal.600" width="full" leftIcon={<MdHome />}>
+//               Home
+//             </Button>
+//           </Link>
+//           <Link to="/about">
+//             <Button variant="link" color="teal.600" width="full" leftIcon={<MdInfo />}>
+//               About
+//             </Button>
+//           </Link>
+//           <Link to="/services">
+//             <Button variant="link" color="teal.600" width="full" leftIcon={<MdInfo />}>
+//               Services
+//             </Button>
+//           </Link>
+//           <Link to="/contact">
+//             <Button variant="link" color="teal.600" width="full" leftIcon={<MdPhone />}>
+//               Contact
+//             </Button>
+//           </Link>
+//         </Box>
+//       )}
+//     </Box>
+//   );
+// };
+
+// export default Navbar;
+
+
+
 import React from 'react';
-import { Box, Flex, Spacer, HStack, Button, IconButton, Avatar, useDisclosure, useBreakpointValue, Text } from '@chakra-ui/react';
-import { HamburgerIcon, HomeIcon, InfoIcon, ServicesIcon, ContactIcon } from '@chakra-ui/icons';  // Import icons
-import { Link } from 'react-router-dom'; // For navigation (you can modify this as needed)
+import { Box, Button, HStack, IconButton, Text, VStack, useDisclosure, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Icon } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom'; // For navigation
+import { FaBox, FaClipboardList, FaFileInvoice, FaChartBar } from 'react-icons/fa'; // React Icons for buttons
 
 const Navbar = () => {
-  const { isOpen, onToggle } = useDisclosure();
-  const display = useBreakpointValue({ base: 'none', md: 'flex' });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box as="nav" w="100%" p={4} boxShadow="md" bg="teal.500">
-      <Flex align="center" justify="space-between">
+    <Box as="nav" p={4} bg="teal.500" color="white">
+      <HStack justify="space-between" align="center">
         {/* Logo or Title */}
         <Box>
-          <Link to="/home"> {/* Logo or Title Link */}
-            <Button colorScheme="white" variant="link" fontSize="xl" fontWeight="bold">
-              GA_BillingSYSTEM
-            </Button>
-          </Link>
+          <Text fontSize="2xl" fontWeight="bold">
+          JUST_BILLING
+          </Text>
         </Box>
 
-        {/* Nav Links (Visible on medium screens and larger) */}
-        <HStack spacing={4} display={display}>
-          <Link to="/home">
-            <Button variant="link" color="white" fontWeight="bold" leftIcon={<HomeIcon />}>
-              Home
+        {/* Navbar Links (Visible on medium screens and larger) */}
+        <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
+          <Link to="/ProductManagement">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaBox />}>
+              Product Management
             </Button>
           </Link>
-          <Link to="/about">
-            <Button variant="link" color="white" fontWeight="bold" leftIcon={<InfoIcon />}>
-              About
+          <Link to="/stockmanagement">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaClipboardList />}>
+              Stock Management
             </Button>
           </Link>
-          <Link to="/services">
-            <Button variant="link" color="white" fontWeight="bold" leftIcon={<ServicesIcon />}>
-              Services
+          <Link to="/invoicemanager">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaFileInvoice />}>
+              Invoice
             </Button>
           </Link>
-          <Link to="/contact">
-            <Button variant="link" color="white" fontWeight="bold" leftIcon={<ContactIcon />}>
-              Contact
+          <Link to="/SalesDashboard">
+            <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaChartBar />}>
+              Sales Report
             </Button>
           </Link>
         </HStack>
 
-        {/* Avatar and Hamburger Menu for Mobile */}
-        <Flex align="center">
-          <Avatar name="User Name" src="https://bit.ly/broken-link" size="sm" />
-          <IconButton
-            aria-label="Open menu"
-            icon={<HamburgerIcon />}
-            display={{ base: 'block', md: 'none' }}
-            onClick={onToggle}
-            ml={4}
-            variant="outline"
-            color="white"
-          />
-        </Flex>
-      </Flex>
+        {/* Hamburger Button for Mobile */}
+        <IconButton
+          aria-label="Open Sidebar"
+          icon={<HamburgerIcon />}
+          display={{ base: 'block', md: 'none' }}
+          onClick={onOpen}
+          variant="outline"
+          color="white"
+        />
+      </HStack>
 
-      {/* Hamburger Menu for Mobile */}
-      {isOpen && (
-        <Box display={{ base: 'block', md: 'none' }} p={4}>
-          <Text>GA_BillingSYSTEM</Text>
-          <Link to="/home">
-            <Button variant="link" color="teal.600" width="full" leftIcon={<HomeIcon />}>
-              Home
-            </Button>
-          </Link>
-          <Link to="/about">
-            <Button variant="link" color="teal.600" width="full" leftIcon={<InfoIcon />}>
-              About
-            </Button>
-          </Link>
-          <Link to="/services">
-            <Button variant="link" color="teal.600" width="full" leftIcon={<ServicesIcon />}>
-              Services
-            </Button>
-          </Link>
-          <Link to="/contact">
-            <Button variant="link" color="teal.600" width="full" leftIcon={<ContactIcon />}>
-              Contact
-            </Button>
-          </Link>
-        </Box>
-      )}
+      {/* Sidebar Drawer for Mobile */}
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent bg="teal.500" color="white">
+          <DrawerCloseButton />
+          <DrawerHeader>Navigation</DrawerHeader>
+
+          <DrawerBody>
+            <VStack spacing={4} align="start">
+              <Link to="/ProductManagement">
+                <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaBox />} onClick={onClose}>
+                  Product Management
+                </Button>
+              </Link>
+              <Link to="/stockmanagement">
+                <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaClipboardList />} onClick={onClose}>
+                  Stock Management
+                </Button>
+              </Link>
+              <Link to="/invoicemanager">
+                <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaFileInvoice />} onClick={onClose}>
+                  Invoice
+                </Button>
+              </Link>
+              <Link to="/SalesDashboard">
+                <Button variant="link" color="white" fontWeight="bold" leftIcon={<FaChartBar />} onClick={onClose}>
+                  Sales Report
+                </Button>
+              </Link>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 };

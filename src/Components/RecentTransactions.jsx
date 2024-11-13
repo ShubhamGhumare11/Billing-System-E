@@ -317,8 +317,8 @@ import {
 const RecentTransactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
-  const [startDate, setStartDate] = useState("2024-11-12");
-  const [endDate, setEndDate] = useState("2024-11-12");
+  const [startDate, setStartDate] = useState("2024-11-13");
+  const [endDate, setEndDate] = useState("2024-11-13");
   const [loading, setLoading] = useState(true);
 
   const bg = useColorModeValue("white", "gray.800");

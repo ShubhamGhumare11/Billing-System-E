@@ -324,6 +324,12 @@ const RecentTransactions = () => {
   const bg = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
 
+<<<<<<< HEAD
+=======
+  const CGST_PERCENT = 2.5;
+  const SGST_PERCENT = 2.5;
+
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
   useEffect(() => {
     const fetchTransactions = async () => {
       setLoading(true);
@@ -379,13 +385,24 @@ const RecentTransactions = () => {
       .reduce((acc, t) => acc + t.amount, 0),
   };
 
+<<<<<<< HEAD
   const cgstTotal = filteredTransactions.reduce(
     (acc, t) => acc + t.cgstAmount,
+=======
+  // Calculate CGST RS and SGST RS totals based Amount
+  const cgstTotal = filteredTransactions.reduce(
+    (acc, t) => acc + parseFloat(t.cgstIdRs), // Sum CGST Rs values
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
     0
   );
-
+  
+  // Calculate total SGST Rs amount
   const sgstTotal = filteredTransactions.reduce(
+<<<<<<< HEAD
     (acc, t) => acc + t.sgstAmount,
+=======
+    (acc, t) => acc + parseFloat(t.sgstIdRs), // Sum SGST Rs values
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
     0
   );
 
@@ -424,30 +441,54 @@ const RecentTransactions = () => {
           <Thead>
             <Tr>
            
+<<<<<<< HEAD
               <Th>Invoice Number</Th>
+=======
+              <Th>Invoice NO </Th>
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
               <Th>Customer</Th>
               <Th>Date</Th>
               <Th>Amount</Th>
               <Th>Payment Method</Th>
+<<<<<<< HEAD
               <Th>CGST(Rs)</Th>
               <Th>SGST(Rs)</Th>
               <Th>CGST(%)</Th>
               <Th>SGST(%)</Th>
+=======
+              <Th>CGST (RS)</Th>
+              <Th>SGST (RS)</Th>
+              <Th>CGST (%)</Th>
+              <Th>SGST (%)</Th>
+
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
             </Tr>
           </Thead>
           <Tbody>
             {filteredTransactions.map((transaction) => (
               <Tr key={transaction.invoiceId}>
+<<<<<<< HEAD
                
                 <Td>{transaction.invoiceNumber}</Td>
+=======
+                <Td>{transaction.invoiceNo}</Td>
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
                 <Td>{transaction.customer}</Td>
                 <Td>{transaction.date}</Td>
                 <Td>{transaction.amount.toFixed(2)}</Td>
                 <Td>{transaction.paymentMethod}</Td>
+<<<<<<< HEAD
                 <Td>{transaction.cgstAmount.toFixed(2)}</Td>
                 <Td>{transaction.sgstAmount.toFixed(2)}</Td>
                 <Td>{transaction.cgstPercent}</Td>
                 <Td>{transaction.sgstPercent}</Td>
+=======
+                <Td>{transaction.cgstIdRs}</Td>
+                <Td>{transaction.sgstIdRs}</Td>
+                <Td>{transaction.cgstIdper}</Td>
+                <Td>{transaction.sgstIdper}</Td>
+                <Td></Td>
+>>>>>>> 46bba553580702b479f952fe2d568c100a3cd7d1
               </Tr>
             ))}
           </Tbody>
@@ -469,8 +510,8 @@ const RecentTransactions = () => {
               <Td>{totalAmount.toFixed(2)}</Td>
               <Td>{paymentMethodTotals.online.toFixed(2)}</Td>
               <Td>{paymentMethodTotals.cash.toFixed(2)}</Td>
-              <Td>{cgstTotal.toFixed(2)}</Td>
-              <Td>{sgstTotal.toFixed(2)}</Td>
+              <Td>{cgstTotal}</Td>
+              <Td>{sgstTotal}</Td>
             </Tr>
           </Tbody>
         </Table>

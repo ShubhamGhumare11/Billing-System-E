@@ -267,16 +267,16 @@ const handleCgstChange = (e) => {
 
   // const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
   return (
-    <Box p={4} border="1px solid gray" borderRadius="md">
+    <Box p={4} border="1px solid gray" borderRadius="md" boxShadow="sm" maxW="90%">
       <VStack spacing={3} align="stretch">
         <Flex
           wrap="wrap"
           align="center"
           justify="space-between"
           direction={{ base: "column", md: "row" }}
-          gap={4}
+          gap={3}
         >
-          <Box flex="1" maxW={{ base: "100%", md: "500px" }} w="full">
+          <Box flex="1" maxW={{ base: "100%", md: '50%' }} >
             <SearchComponent onProductSelect={handleProductSelect} />
           </Box>
         </Flex>

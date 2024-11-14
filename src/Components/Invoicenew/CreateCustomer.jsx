@@ -11,6 +11,8 @@ import {
   HStack,
   VStack,
   useToast, Flex,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 
 const CreateCustomer = ({ onCustomerData }) => {
@@ -100,74 +102,79 @@ const CreateCustomer = ({ onCustomerData }) => {
   const isFormValid = isFullNameValid && isEmailValid && isPhoneValid;
 
   return (
-    <Box as="form" onSubmit={handleSubmit} p="2rem" maxW="50rem" mx="auto">
-      <VStack spacing="1.5rem" align="stretch">
-        <Flex
-          wrap="wrap"
-          align="center"
-          justify="space-between"
-          direction={{ base: 'column', md: 'row' }}
-          gap={4}
-        >
-          <HStack spacing="1rem" wrap={{ base: 'wrap', md: 'nowrap' }}>
-            <FormControl flex="1" minWidth="12rem">
-              <FormLabel fontSize="1rem">Name</FormLabel>
-              <Input
-                name="fullName"
-                value={customerData.fullName}
-                onChange={handleChange}
-                placeholder="Enter Name"
-                fontSize="1rem"
-                padding="0.5rem"
-                minWidth={{ base: '100%', md: '12rem' }}
-                width="100%"
-              />
-            </FormControl>
+    <Box as="form" onSubmit={handleSubmit} p="1rem" maxW="40rem" mx="auto">
+      <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+        <GridItem colSpan={{ base: 2, md: 1 }}>
+          <FormControl isRequired>
+            <FormLabel fontSize="0.9rem">Name</FormLabel>
+            <Input
+              name="fullName"
+              value={customerData.fullName}
+              onChange={handleChange}
+              placeholder="Full Name"
+              fontSize="0.9rem"
+              p="0.5rem"
+            />
+          </FormControl>
+        </GridItem>
 
-            <FormControl flex="1" minWidth="12rem">
-              <FormLabel fontSize="1rem">Email</FormLabel>
-              <Input
-                name="email"
-                type="email"
-                value={customerData.email}
-                onChange={handleChange}
-                placeholder="Enter email"
-                fontSize="1rem"
-                padding="0.5rem"
-                minWidth={{ base: '100%', md: '12rem' }}
-                width="100%"
-              />
-            </FormControl>
+        <GridItem colSpan={{ base: 2, md: 1 }}>
+          <FormControl isRequired>
+            <FormLabel fontSize="0.9rem">Email</FormLabel>
+            <Input
+              name="email"
+              type="email"
+              value={customerData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              fontSize="0.9rem"
+              p="0.5rem"
+            />
+          </FormControl>
+        </GridItem>
 
-            <FormControl flex="1" minWidth="12rem">
-              <FormLabel fontSize="1rem">Phone</FormLabel>
-              <Input
-                name="phone"
-                value={customerData.phone}
-                onChange={handleChange}
-                placeholder="Enter phone number"
-                fontSize="1rem"
-                padding="0.5rem"
-                minWidth={{ base: '100%', md: '12rem' }}
-                width="100%"
-              />
-            </FormControl>
+        <GridItem colSpan={{ base: 2, md: 1 }}>
+          <FormControl isRequired>
+            <FormLabel fontSize="0.9rem">Phone</FormLabel>
+            <Input
+              name="phone"
+              value={customerData.phone}
+              onChange={handleChange}
+              placeholder="Phone"
+              fontSize="0.9rem"
+              p="0.5rem"
+            />
+          </FormControl>
+        </GridItem>
 
-            <Button
-              colorScheme="teal"
-              type="submit"
-              width={{ base: '100%', md: '10rem' }}
-              alignSelf={{ base: 'stretch', md: 'flex-end' }}
-              fontSize="0.75rem"
-              padding="0.75rem"
-              isDisabled={!isFormValid || isSubmitting} // Disable button if form is invalid or already submitting
-            >
-              Create Customer
-            </Button>
-          </HStack>
-        </Flex>
-      </VStack>
+        <GridItem colSpan={{ base: 2, md: 1 }}>
+          <FormControl>
+            <FormLabel fontSize="0.9rem">Address</FormLabel>
+            <Input
+              name="address"
+              value={customerData.address}
+              onChange={handleChange}
+              placeholder="Address"
+              fontSize="0.9rem"
+              p="0.5rem"
+            />
+          </FormControl>
+        </GridItem>
+
+        <GridItem colSpan={2} textAlign="center">
+          <Button
+            colorScheme="teal"
+            type="submit"
+            isDisabled={!isFormValid || isSubmitting}
+            fontSize="0.9rem"
+            px="1.5rem"
+          >
+            Create Customer
+          </Button>
+        </GridItem>
+      </Grid>
     </Box>
+
   );
 };
 

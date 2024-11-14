@@ -113,3 +113,4 @@ const SearchComponent = ({ onProductSelect }) => { // Accept onProductSelect pro
 };
 
 export default SearchComponent;
+// shivam

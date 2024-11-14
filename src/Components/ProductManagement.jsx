@@ -673,7 +673,7 @@ handleGetAllProducts()
       });
 
       handleGetAllProducts(); // Refresh product list
-      setIsModalOpen(false);
+      setIsModalOpen(true);
       setIsFormVisible(false);
     } catch (error) {
       console.error("Error adding product:", error);
@@ -718,8 +718,8 @@ handleGetAllProducts()
         </HStack>
       </Flex>
 
-      {/* Add Product Modal */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      Add Product Modal
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(true)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add New Product</ModalHeader>
@@ -827,7 +827,7 @@ handleGetAllProducts()
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" onClick={handleAddProduct}>
-              Add Product
+              CREATE
             </Button>
             <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
               Cancel

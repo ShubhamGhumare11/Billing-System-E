@@ -209,11 +209,6 @@ const ProductSelection = ({ onProductSelect, onGstToggle ,onPaymentMethodChange,
     return product.sellingPrice - discountAmount;
   };
 
-  // const getSubTotalPrice = (product) => {
-  //     const discountAmount = (product.sellingPrice * product.discount) / 100;
-  //    const result=product.sellingPrice - discountAmount
-  //     return result *product.quantity;
-  // };
 
   const handleGstChange = (productID, newGst) => {
     const updatedProducts = selectedProducts.map((p) =>
@@ -248,37 +243,6 @@ const ProductSelection = ({ onProductSelect, onGstToggle ,onPaymentMethodChange,
 
 
 
-// // Inside ProductSelection.jsx
-// const handlePaymentMethodChange = (e) => {
-//   const selectedMethod = e.target.value; // Get the selected value
-
-//   setPaymentMethod(selectedMethod)
-//   onPaymentMethodChange(selectedMethod); // Call the callback with the new method
-// };
-
-
-
-
-
-
-// const handlePaymentMethodChange = (method) => {
-//   setPaymentMethod(method);  // Update the payment method
-
-//   // Update all selected products with the same payment method
-//   setSelectedProducts(prevProducts =>
-//     prevProducts.map(product => ({
-//       ...product,
-//       paymentMethod: method,  // Add paymentMethod to each product
-//     }))
-//   );
-
-//   // setSelectedProducts(updatedProducts);
-//   // onProductSelect(updatedProducts);
-
-//   console.log("Updated products with payment method:", selectedProducts);  // Debugging log
-// };
-
-
 
 
 
@@ -303,69 +267,21 @@ const handleCgstChange = (e) => {
 
   // const finalPrice = (product.sellingPrice - (product.sellingPrice * product.discount) / 100);
   return (
-    <Box p={4} border="1px solid gray" borderRadius="md">
+    <Box p={4} border="1px solid gray" borderRadius="md" boxShadow="sm" maxW="90%">
       <VStack spacing={3} align="stretch">
         <Flex
           wrap="wrap"
           align="center"
           justify="space-between"
           direction={{ base: "column", md: "row" }}
-          gap={4}
+          gap={3}
         >
-          <Box flex="1" maxW={{ base: "100%", md: "500px" }} w="full">
+          <Box flex="1" maxW={{ base: "100%", md: '50%' }} >
             <SearchComponent onProductSelect={handleProductSelect} />
           </Box>
         </Flex>
 
-        {/* <HStack
-          direction={{ base: "column", md: "row" }} // Stack vertically on smaller screens, horizontally on larger screens
-          spacing={{ base: 4, md: 6 }} // Adjust spacing for small and large screens
-          align="flex-start" // Align items to the start for consistency
-          width="100%" // Ensure full width
-          justify="flex-start"
-        > */}
-          {/* <Checkbox
-    isChecked={gstEnabled}
-    onChange={handleGstToggle}
-    colorScheme="green"
-    width={{ base: '100%', md: 'auto' }} // Full width on mobile, auto on larger screens
-  >
-    Apply GST
-  </Checkbox> */}
-
-          {/* <FormControl width={{ base: "100%", md: "auto" }} mb={4}>
-            <FormLabel fontSize={{ base: "sm", md: "md" }}>SGST</FormLabel>
-            <NumberInput
-              value={sgst}
-              onChange={(valueString) =>
-                handleSgstChange({ target: { value: valueString } })
-              }
-              width="100%" // Ensures the input takes full width in its container
-            >
-              <NumberInputField placeholder="Enter SGST" />
-            </NumberInput>
-
-            <FormLabel fontSize={{ base: "sm", md: "md" }}>CGST</FormLabel>
-            <NumberInput
-              value={cgst}
-              onChange={(valueString) =>
-                handleCgstChange({ target: { value: valueString } })
-              }
-              width={{ base: "100%", md: "auto" }} // Full width on mobile, auto on larger screens
-            >
-              <NumberInputField placeholder="Enter CGST" />
-            </NumberInput>
-          </FormControl>
-
-          <Select
-            placeholder="Select Payment Method"
-            onChange={handlePaymentMethodSelect}
-            width={{ base: "100%", md: "auto" }} // Full width on mobile, auto on larger screens
-          >
-            <option value="Online">Online</option>
-            <option value="Cash">Cash</option>
-          </Select>
-        </HStack> */}
+ 
 
 
 

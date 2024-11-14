@@ -95,7 +95,7 @@ import ProductSelection from "./ProductSelection";
 import InvoiceSummary from "./InvoiceSummary";
 import CustomerList from "./CustomerList";
 
-import { Button, Box, Text, Heading, Center, Flex } from "@chakra-ui/react";
+import { Button, Box, Text, Heading, Center, Flex, Divider, Grid, VStack,} from "@chakra-ui/react";
 import axios from "axios";
 
 const InvoiceManager = () => {
@@ -316,7 +316,9 @@ const productParams = selectedProducts
   };
 
   return (
-    <Box  key={resetKey}>
+
+
+    <Box  key={resetKey} p={8}  mx="auto" boxShadow="lg" rounded="md" bg="white">
       <Heading
         as="h2"
         size="xl" // Make it larger than "lg"
@@ -333,16 +335,24 @@ const productParams = selectedProducts
       >
         Billing
       </Heading>
+      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
+      <VStack spacing={6} align="stretch">
 
+      <Box p={4} borderWidth="1px" borderRadius="md" boxShadow="sm">
       <CreateCustomer onCustomerData={handleCustomerData} />
       {/* <CustomerList onSelect={handleCustomerSelect} /> */}
-
+      </Box>
+      <Box p={4} borderWidth="1px" borderRadius="md" boxShadow="sm">
       <ProductSelection
         onProductSelect={handleProductSelect}
         onGstToggle={handleGstToggle}
         onPaymentMethodChange={handlePaymentMethodChange}
         onTaxChange={handleTaxChange} 
       />
+   </Box>
+   </VStack>
+
+   <Box p={4} borderWidth="1px" borderRadius="md" boxShadow="sm">
       <InvoiceSummary
         customer={customerData}
         products={selectedProducts}
@@ -350,6 +360,10 @@ const productParams = selectedProducts
         sgst={sgst}
         cgst={cgst}
       />
+   <Divider my={4} />
+
+
+
       {/* <Text fontWeight="bold">Total Amount: ${totalAmount}</Text> */}
       {/* <Button onClick={handleGenerateInvoice} mt={4} colorScheme="teal" alignItems={Center}>Save Details</Button> */}
       <Flex
@@ -371,6 +385,8 @@ const productParams = selectedProducts
           Save Invoice
         </Button>
       </Flex>
+      </Box>
+      </Grid>
     </Box>
   );
 };

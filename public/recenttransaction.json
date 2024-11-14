@@ -1,47 +1,57 @@
 [
   {
-    "invoiceId": "INV-001",
+    "invoiceNo": "INV-001",
     "customer": "John Doe",
     "date": "2024-11-01",
     "amount": 150.75,
     "paymentMethod": "Credit Card",
-    "cgstId": "CGST-1001",
-    "sgstId": "SGST-2001"
+    "cgstIdRs": "50",
+    "sgstIdRs": "100",
+    "cgstIdper":"2.5",
+    "sgstIdper":"2.5"
   },
   {
-    "invoiceId": "INV-002",
+    "invoiceNo": "INV-002",
     "customer": "Jane Smith",
     "date": "2024-11-02",
-    "amount": -45.50,
+    "amount": 45.50,
     "paymentMethod": "Bank Transfer",
-    "cgstId": "CGST-1002",
-    "sgstId": "SGST-2002"
+    "cgstIdRs": "60",
+    "sgstIdRs": "100",
+    "cgstIdper":"2.5",
+    "sgstIdper":"2.5"
   },
   {
-    "invoiceId": "INV-003",
+    "invoiceNo": "INV-003",
     "customer": "Alice Johnson",
     "date": "2024-11-02",
     "amount": 200.00,
     "paymentMethod": "Cash",
-    "cgstId": "CGST-1003",
-    "sgstId": "SGST-2003"
+    "cgstIdRs": "50",
+    "sgstIdRs": "10",
+    "cgstIdper":"2.5",
+    "sgstIdper":"2.5"
   },
   {
-    "invoiceId": "INV-004",
+    "invoiceNo": "INV-004",
     "customer": "John Doe",
     "date": "2024-11-03",
     "amount": 300.25,
     "paymentMethod": "Credit Card",
-    "cgstId": "CGST-1004",
-    "sgstId": "SGST-2004"
+   "cgstIdRs": "50",
+    "sgstIdRs": "10",
+    "cgstIdper":"2.5",
+    "sgstIdper":"2.5"
   },
   {
-    "invoiceId": "INV-005",
+    "invoiceNo": "INV-005",
     "customer": "Jane Smith",
     "date": "2024-11-03",
     "amount": 120.00,
     "paymentMethod": "Debit Card",
-    "cgstId": "CGST-1005",
-    "sgstId": "SGST-2005"
+  "cgstIdRs":"50",
+    "sgstIdRs": "10",
+    "cgstIdper":"2.5",
+    "sgstIdper":"2.5"
   }
 ]

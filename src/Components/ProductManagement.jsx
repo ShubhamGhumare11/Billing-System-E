@@ -529,7 +529,7 @@ import {
   ModalFooter,
   Flex,
   IconButton ,
-  Tooltip,
+  Tooltip,Text
 } from "@chakra-ui/react";
 import axios from "axios";
 import SearchComponent from "./SearchComponent";
@@ -661,6 +661,10 @@ handleGetAllProducts()
       console.log(products);
       console.log(newProduct);
 
+      setIsModalOpen(false);
+      setIsFormVisible(false);
+      handleGetAllProducts(); // Refresh product list
+     
       setNewProduct({
         productName: "",
         description: "",
@@ -670,11 +674,8 @@ handleGetAllProducts()
         discount: "",
         stockQuantities: [],
         clothingType: "",
-      });
-
-      handleGetAllProducts(); // Refresh product list
-      setIsModalOpen(false);
-      setIsFormVisible(false);
+      }); 
+     
     } catch (error) {
       console.error("Error adding product:", error);
     }
@@ -910,16 +911,16 @@ handleGetAllProducts()
 
           <Flex direction="column" height="100%">
           <Box flex="1" overflowY="auto">
-         <Table variant="simple" mt={4}>
+         <Table variant="striped" colorScheme="gray" size="xs" mt={4}>
            <Thead>
              <Tr>
                {/* <Th>Product ID</Th> */}
-               <Th>Product Name</Th>
-               <Th>Product Type</Th>
-               <Th>Description</Th>
-               <Th>Selling Price</Th>
-               <Th>Stock Quantity</Th>
-               <Th>Actions</Th>
+               <Th p="2" fontSize="sm">Product Name</Th>
+               <Th p="2" fontSize="sm">Product Type</Th>
+               <Th p="2" fontSize="sm">Description</Th>
+               <Th p="2" fontSize="sm" >Selling Price</Th>
+               <Th p="2" fontSize="sm">Stock Quantity</Th>
+               <Th p="2" fontSize="sm">Actions</Th>
              </Tr>
            </Thead>
            <Tbody>
@@ -931,9 +932,10 @@ handleGetAllProducts()
                >
                  {/* <Td>{product.productID}</Td> */}
 
-                 <Td>
+                 <Td  p="2" fontSize="xs">
                    {editableProductID === product.productID ? (
                      <Input
+                       size="xs"
                        value={product.productName}
                        onChange={(e) =>
                          handleProductChange(
@@ -961,10 +963,11 @@ handleGetAllProducts()
                  )}
                </Td> */}
 
-                 <Td>
+                 <Td p="2" fontSize="xs">
                    {editableProductID === product.productID ? (
                      <VStack spacing={4}>
                        <Checkbox
+                            size="sm"
                          isChecked={product.clothingType === "READYMADE"}
                          onChange={(e) =>
                            handleProductChange(
@@ -999,13 +1002,14 @@ handleGetAllProducts()
                        </Checkbox>
                      </VStack>
                    ) : (
-                     product.clothingType
+                    <Text fontSize="xs">{product.clothingType}</Text>
                    )}
                  </Td>
 
-                 <Td>
+                 <Td p="2" fontSize="xs">
                    {editableProductID === product.productID ? (
                      <Input
+                      size="xs"
                        value={product.description}
                        onChange={(e) =>
                          handleProductChange(
@@ -1016,13 +1020,13 @@ handleGetAllProducts()
                        }
                      />
                    ) : (
-                     product.description
+                    <Text fontSize="xs">{ product.description}</Text>
                    )}
                  </Td>
 
-                 <Td>
+                 <Td  p="2" fontSize="xs">
                    {editableProductID === product.productID ? (
-                     <Input
+                     <Input  size="xs"
                        type="number"
                        value={product.sellingPrice}
                        onChange={(e) =>
@@ -1034,13 +1038,14 @@ handleGetAllProducts()
                        }
                      />
                    ) : (
-                     product.sellingPrice
+                    <Text fontSize="xs">{  product.sellingPrice}</Text>
                    )}
                 </Td>
 
-                 <Td>
+                 <Td p="2" fontSize="xs">
                    {editableProductID === product.productID ? (
                      <Input
+                     size="xs"
                        value={product.stockQuantities}
                        onChange={(e) =>
                          handleProductChange(
@@ -1084,6 +1089,7 @@ handleGetAllProducts()
   <HStack spacing={4}>
     <Tooltip label="Save changes" aria-label="Save Tooltip">
       <IconButton
+       size="xs"
         aria-label="Save"
         icon={<HiSave />}
         colorScheme="green"
@@ -1093,6 +1099,7 @@ handleGetAllProducts()
 
     <Tooltip label="Edit product" aria-label="Edit Tooltip">
       <IconButton
+       size="xs"
         aria-label="Edit"
         icon={<HiPencilAlt />}
         colorScheme="yellow"
@@ -1102,6 +1109,7 @@ handleGetAllProducts()
 
     <Tooltip label="Delete product" aria-label="Delete Tooltip">
       <IconButton
+       size="xs"
         aria-label="Delete"
         icon={<HiTrash />}
         colorScheme="red"
